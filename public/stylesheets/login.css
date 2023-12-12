@@ -1,0 +1,49 @@
+.form{
+    background-color: lightblue;
+    min-width: 100px;
+    max-width: 500px;
+    height: auto;
+    margin: auto;
+    justify-content: center;
+    font-size: large;
+}
+
+.LoginPa{
+    text-align: center;
+}
+
+.form:hover{
+    background-color: rgb(104, 204, 238);
+}
+
+
+.Head{
+    font-size: 50px;
+    background-color: yellow;
+    /* background-color: darkblue; */
+    font-family: 'Courier New', Courier, monospace;
+    text-shadow: 2px 2px;
+    
+}
+/* 
+option{
+    color: black;
+} */
+
+.user{
+    margin: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* padding-bottom: 10px; */
+    border-radius: 20px;
+    background-color: white;
+}
+
+.form>button{
+    font-size: large;
+    color: black;
+}
+
+.form>button:hover{
+    background-color: red;
+}
