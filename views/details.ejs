@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/editdetails" method="post">
+    <span class='user'>Edit your mobile no.</span><br/>
+          <input name='mobile' type='number' value="<%=user.mobile%>"/> <br/><br/>
+          <span class='user'>Edit your name</span><br/>
+          <input name='name' type='text' value="<%=user.name%>"/> <br/><br/>
+          <span class='user'>Edit your email</span><br/>
+          <input name='email' type='email' value="<%=user.email%>"/> <br/><br/>
+          <span class='user'>Edit your location</span><br/>
+          <input id="locationName" name='locationName' type='text' value="<%=user.locationName%>"/> <br/><br/>
+          <span class='user'>Edit your username</span><br/>
+          <input name='username' type='text' value="<%=user.username%>"/> <br/><br/>
+          <button>Change details</button>
+
+          
+        </form>
+        <button id="getLocationButton">Change My Location</button>
+
+        
+        <script>
+            document.getElementById('getLocationButton').addEventListener('click', () => {
+                // Call a function to get the user's location
+                getUserLocation();
+            });
+        </script>
+        <script>
+           
+            function getUserLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    // Handle the user's location
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+    
+                    // Send location data to the server
+                    fetch(`/save-location?lat=${lat}&lng=${lng}`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Location saved:', data);
+                    })
+                    .catch(error => {
+                        console.error('Error saving location:', error.message);
+                    });
+                }, (error) => {
+                    console.error('Error getting user location:', error.message);
+                });
+            } else {
+                console.error('Geolocation is not supported by this browser.');
+            }
+        }
+        </script>
+</body>
+</html>

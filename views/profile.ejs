@@ -7,83 +7,78 @@
     <title>Document</title>
 </head>
 <body>
-  <nav>
-    <!-- <ul>
-        <li><a href="/">Home</a></li>
-        Add more navigation links as needed 
-    </ul> -->
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <!-- <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a> -->
-        <div class="dropdown">
-          <button class="dropbtn">Dropdown</button>
-          <div class="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-          </div>
-      </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="/">Disabled</a>
-      </li>
-    </ul>
-    
-</nav>
-    <!-- <div class='land'>
-        <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">Kaarigar-Sathi</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/">Action</a>
-          <a class="dropdown-item" href="/">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="/">Something else here</a>
+    <div class='navbar'>
+        <div class='nav-logo'>
+            <img src="/images/logo.png" alt="" />
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="/">Disabled</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-  </div>
-</nav> -->
-<div class="labcus">
-  <Link to="/labourPage">
-<img class="labour" src='https://img.freepik.com/free-vector/group-construction-workers-cartoon-characters_1308-90754.jpg' alt='wow'/>
-Tradesman
-</Link>
-<Link to="/customerPage">
-<img class="customer" src="/images/Customer2.jpg" alt='nto'/>
-customer
-</Link>
-</div>
+        <ul class="nav-menu">
+            <li >Home</li>
+            <li >About</li>
+        </ul>
+        <div class='nav-login-cart'>
+          <a href="/details">View your profile</a> 
+        </div>
+
     </div>
+    <div class='hero-top'>
+
+        <div class='hero-left'>
+          <h1>A Smart way to <br/>
+            find and provide <br/>
+             work to Kaarigar<br/>
+            near you</h1>
+        </div>
+
+        <div class='hero-right'>
+            <img src="/images/hero_image.png" alt="" width='700' height='450'  />
+        </div>
+
+         <button class="hero-customer-btn">
+              Customer
+              <img src="/images/customer_icon.png" alt="" width='200' height='170' />
+          </button>
+
+             <button class="hero-karigar-btn">
+              Kaarigar
+              <img src="/images/karigar_icon.png" alt="" width='200' height='150' />
+             </button>
+    </div>
+    <button id="getLocationButton">Get My Location</button>
+
+    <script>
+        document.getElementById('getLocationButton').addEventListener('click', () => {
+            // Call a function to get the user's location
+            getUserLocation();
+        });
+    </script>
+    <script>
+       
+        function getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                // Handle the user's location
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                // Send location data to the server
+                fetch(`/save-location?lat=${lat}&lng=${lng}`, {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Location saved:', data);
+                })
+                .catch(error => {
+                    console.error('Error saving location:', error.message);
+                });
+            }, (error) => {
+                console.error('Error getting user location:', error.message);
+            });
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }
+    </script>
+    
 </body>
 </html>
