@@ -12,6 +12,18 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
+router.get('/customer', function(req, res, next) {
+  res.render('customer');
+});
+
+router.get('/checking', function(req, res, next) {
+  res.render('checking');
+});
+
+router.get('/kaarigar', function(req, res, next) {
+  res.render('kaarigar');
+});
+
 router.get('/details', async function(req, res, next) {
   const user = await userModel.findOne({username: req.session.passport.user});
   res.render('details', {user});

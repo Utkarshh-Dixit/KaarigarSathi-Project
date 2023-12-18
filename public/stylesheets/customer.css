@@ -1,0 +1,37 @@
+.kaarigar {
+    display: flex;
+    align-items: flex-start;
+    border: 2px solid black;
+    margin-bottom: 5px;
+    justify-content: center;
+  }
+  
+.mapIm{
+    height: 120px;
+    margin-left: 20px;
+}
+
+  .image-container {
+    margin-right: 20px; /* Adjust the margin as needed */
+    height: 120px;
+  }
+  
+  .imageKar {
+    border-radius: 50%;
+    height: 100%; /* Make the image height 100% of the container */
+  }
+  
+  .details-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Optional: Add some styles to improve the overall layout */
+  h3, p, h5 {
+    margin: 0;
+  }
+  
+  p {
+    margin-bottom: 10px;
+  }
+  

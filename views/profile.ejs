@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/profile.css">
     <title>Document</title>
+
 </head>
 <body>
+    <div class="pro">
     <div class='navbar'>
         <div class='nav-logo'>
             <img src="/images/logo.png" alt="" />
@@ -20,30 +22,33 @@
         </div>
 
     </div>
-    <div class='hero-top'>
+    <div class='top'>
 
-        <div class='hero-left'>
+        <div class='heading'>
           <h1>A Smart way to <br/>
             find and provide <br/>
              work to Kaarigar<br/>
             near you</h1>
         </div>
 
-        <div class='hero-right'>
+        <div id="imageContainer" class='image-container'>
             <img src="/images/hero_image.png" alt="" width='700' height='450'  />
         </div>
-
-         <button class="hero-customer-btn">
-              Customer
-              <img src="/images/customer_icon.png" alt="" width='200' height='170' />
-          </button>
-
-             <button class="hero-karigar-btn">
-              Kaarigar
-              <img src="/images/karigar_icon.png" alt="" width='200' height='150' />
-             </button>
     </div>
-    <button id="getLocationButton">Get My Location</button>
+    <div class="bottom">
+        
+         <a href="/customer" class="image-container">
+              <span>Customer</span>
+              <img src="/images/customer_icon.png" alt="" width='200' height='170' />
+         </a>
+        
+             <a href="/kaarigar" class="image-container">
+              <span>Kaarigar</span>
+              <img src="/images/karigar_icon.png" alt="" width='200' height='150' />
+             </a>
+    </div>
+</div>
+    <!-- <button id="getLocationButton">Get My Location</button> -->
 
     <script>
         document.getElementById('getLocationButton').addEventListener('click', () => {
@@ -79,6 +84,6 @@
         }
     }
     </script>
-    
+
 </body>
 </html>

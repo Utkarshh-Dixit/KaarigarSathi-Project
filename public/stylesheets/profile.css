@@ -1,133 +1,83 @@
-.navbar{
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .pro {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: white; /* Adjust the background color as needed */
+    color: black; /* Adjust the text color as needed */
+  }
+  
+  .nav-menu {
+    list-style-type: none;
+    display: flex;
+  }
+  
+  .nav-menu li {
+    margin-right: 20px; /* Adjust the spacing between menu items */
+    cursor: pointer;
+  }
+  
+  .top {
     display: flex;
     justify-content: space-around;
-    padding: 8px;
-    box-shadow: 0 1px 3px -2px black;
-}
-
-.nav-logo{
-    display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-.nav-menu{
+    flex: 1;
+    background-color: white; /* Adjust the background color as needed */
+  }
+  
+  .heading {
+    max-width: 50%; /* Limit the width of the heading container */
+    font-size: 33px;
+  }
+  
+  .heading h1 {
+    margin: 0; /* Remove default margin for the heading */
+  }
+  
+  .image-container {
+    max-width: 50%; /* Limit the width of the image container */
+  }
+  
+  .bottom {
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    list-style: none;
-    gap: 50px;
-    color: black;
-    font-size: 20px;
-    font-weight: 500;
-}
-
-.nav-menu li{
+    padding: 20px; /* Adjust the padding as needed */
+    background-color: white; /* Adjust the background color as needed */
+  }
+  
+  .image-container button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 3px;
+    background-color: white; /* Adjust the button background color as needed */
+    padding: 10px;
     cursor: pointer;
-}
-.nav-menu hr{
-    border: none;
-    width: 80%;
-    height: 3px;
-    border-radius: 10px;
-    background: #FF4141;
-}
+  }
 
-.nav-login-cart button{
-    width: 120px;
-    height: 58px;
-    outline: none;
-    border: 1px solid #7a7a7a;
-    border-radius: 75px;
-    color: #515151;
-    font-size: 20px;
-    font-weight: 600;
-    background: red;
-    cursor: pointer;
-}
-
-.nav-login-cart button:active{
-    background: #f3f3f3;
-}
-
-.hero-top{
-    height: 65vh;
-    display: flex;
-    position: relative;
-    
-}
-
-.hero-left{
-    flex: 1;
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 20px;
-    padding-top: 100px;
-    padding-left: 20px;
-    line-height: 1.1;
-}
-.hero-left h1{
-    color: #090909;
-    font-size: 55px;
-    font-weight: 600;
-    margin-top: 10px ;
-}
-
-
-
-.hero-customer-btn{
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-    right: 10%;
-    gap: 15px;
-    width: 350px;
-    height: 250px;
-    border-radius: 15px;
-    margin-top: 450px;
-    margin-right: 600px;
-    background: white;
-    color: rgb(93, 216, 216);
-    font-size: 45px;
-    font-weight: 500;
-}
-
-.hero-karigar-btn:hover{
-    background-color: rgb(93, 216, 216);
-    color: white;
-}
-.hero-customer-btn:hover{
-    background-color: rgb(93, 216, 216);
-    color: white;
-}
-
-.hero-karigar-btn{
-
-    position: absolute;
-    align-items: center;
-    justify-content: center;
-    left: 55%;
-    gap: 5px;
-    width: 350px;
-    height: 250px;
-    border-radius: 15px;
-    margin-top: 450px;
-    margin-right: 400px;
-    background: white;
-    color: rgb(93, 216, 216);
-    font-size: 45px;
-    font-weight: 500;
-    padding-bottom: 25px;
-}
-
-.hero-right{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+  .image-container:hover{
+    border: 3px solid red;
+    cursor: all-scroll;
+  }
+  
+  .image-container span {
+    margin-bottom: 5px; /* Adjust the margin between text and image */
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  
