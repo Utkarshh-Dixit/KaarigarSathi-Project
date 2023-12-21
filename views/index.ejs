@@ -10,11 +10,15 @@
       <form class='form' action="/register" method="post">
           <span class='Head'>Kaarigar-Sathi</span><br/><br/><br/>
           <h4>Select your profile </h4>
-          <select>
-              <option >Select</option>
-              <option >Vendor</option>
-              <option >Customer</option>
+          <select name="selectedOption" id="selectedOption" onchange="toggleProfessionInput()">
+              <option disabled selected>Select</option>
+              <option value="vendor">Vendor</option>
+              <option value="Customer">Customer</option>
           </select><br/><br/>
+          <div id="professionInput" style="display:none;">
+            <label for="profession">Profession:</label>
+            <input type="text" id="profession" name="profession">
+          </div><br/>
           <span class='user'>Enter your mobile no.</span><br/>
           <input name='mobile' type='number' /> <br/><br/>
           <span class='user'>Enter your name</span><br/>
@@ -37,6 +41,18 @@
       </div>
   </div>
 
+  <script>
+    function toggleProfessionInput() {
+      var selectedOption = document.getElementById("selectedOption").value;
+      var professionInput = document.getElementById("professionInput");
+
+      if (selectedOption === "vendor") {
+        professionInput.style.display = "block";
+      } else {
+        professionInput.style.display = "none";
+      }
+    }
+  </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&libraries=places"></script>
   </body>
 </html>

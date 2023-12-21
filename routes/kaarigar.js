@@ -4,7 +4,8 @@ const plm = require('passport-local-mongoose');
 
 mongoose.connect('mongodb://127.0.0.1:27017/kaarigarsathi');
 
-const userSchema = mongoose.Schema({
+const kaarigarSchema = mongoose.Schema({
+    profession: String,
   selectedOption: String,
   mobile: {
     type: Number,
@@ -35,7 +36,7 @@ const userSchema = mongoose.Schema({
   },
 });
 
-userSchema.plugin(plm);
+kaarigarSchema.plugin(plm);
 
-module.exports = mongoose.model("user", userSchema);
-
+  module.exports = mongoose.model("kaarigar", kaarigarSchema);
+  

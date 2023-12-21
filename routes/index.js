@@ -3,10 +3,13 @@ const passport = require('passport');
 const googleMaps = require('@google/maps');
 const axios = require('axios');
 const userModel = require('./users');
+const kaarigarModel = require('./kaarigar');
 var router = express.Router();
 var flash = require('connect-flash');
-const localStrategy = require('passport-local');
-passport.use(new localStrategy(userModel.authenticate()));
+const localStrategy = require('passport-local').Strategy;
+passport.use(new localStrategy(kaarigarModel.authenticate()));
+// passport.use('kaarigar-local', new localStrategy(kaarigarModel.authenticate()));
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index');
@@ -30,10 +33,14 @@ router.get('/details', async function(req, res, next) {
 });
 
 router.get('/profile', isLoggedIn, async function(req, res){
+  
   const user = await userModel.findOne({username: req.session.passport.user});
+  const kaarigar = await kaarigarModel.findOne({username: req.session.passport.kaarigar});
+  if(user)
   // const coordinates = await getCoordinates(user.locationName);
   // console.log(coordinates);
   res.render('profile', {user});
+  else res.render('profile', {kaarigar});
 });
 
 router.post('/editdetails', async function(req, res){
@@ -41,7 +48,7 @@ router.post('/editdetails', async function(req, res){
     {username: req.session.passport.user},
      {mobile: req.body.mobile,
     name: req.body.name,
-  email: req.body.email,
+     email: req.body.email,
 locationName: req.body.locationName,
 username: req.body.username},
       {new: true});
@@ -98,28 +105,47 @@ router.post('/save-location', async (req, res) => {
 router.post('/register', async function(req, res){
   // const { mobile, username, email, name, locationName } = req.body;
     // const coordinates = await getCoordinates(locationName);
-
+    
     // if (!coordinates) {
-    //   // Handle the case when no coordinates are found
-    //   return res.status(400).send('Error: Could not find coordinates for the provided location name.');
-    // }
-
-
+      //   // Handle the case when no coordinates are found
+      //   return res.status(400).send('Error: Could not find coordinates for the provided location name.');
+      // }
+      
+      const {selectedOption} = req.body;
+      if(selectedOption === "vendor"){
+        const kaarigarData = new kaarigarModel({
+          selectedOption: selectedOption,
+          mobile:req.body.mobile, 
+          username: req.body.username, 
+          email: req.body.email, 
+          name:req.body.name, 
+          locationName: req.body.locationName,
+          profession: req.body.profession
+        });
+        kaarigarModel.register(kaarigarData, req.body.password)
+          .then(function(){
+            passport.authenticate("local")(req, res, function(){
+              res.redirect("/profile");
+            })
+          })
+    }
+    else{
     const userData = new userModel({
+      selectedOption: selectedOption,
        mobile:req.body.mobile, 
        username: req.body.username, 
        email: req.body.email, 
        name:req.body.name, 
        locationName: req.body.locationName 
       });
-
-      
       userModel.register(userData, req.body.password)
         .then(function(){
           passport.authenticate("local")(req, res, function(){
             res.redirect("/profile");
           })
         })
+    }
+      
 });
 
 
@@ -145,10 +171,11 @@ router.get('/login', function(req, res){
   res.render('login');
 });
 
-router.post('/login', passport.authenticate("local", {
+router.post('/login',passport.authenticate("local", {
   successRedirect: "/profile",
   failureRedirect: "/"
 }), function(req, res){});
+
 
 router.get("/logout", function(req, res){
   req.logout(function(err) {

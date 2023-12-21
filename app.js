@@ -7,6 +7,7 @@ var logger = require('morgan');
 var Session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var kaarigarRouter = require('./routes/kaarigar');
 const passport = require('passport');
 
 
@@ -22,8 +23,25 @@ app.use(Session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.serializeUser(usersRouter.serializeUser());
-passport.deserializeUser(usersRouter.deserializeUser());
+passport.serializeUser(kaarigarRouter.serializeUser());
+passport.deserializeUser(kaarigarRouter.deserializeUser());
+// passport.serializeUser((user, done) => {
+//   console.log('Serializing user:', user);
+//   done(null, { id: user.id, userType: user.constructor.modelName });
+// });
+
+// passport.deserializeUser(async (serializedUser, done) => {
+//   console.log('Deserializing user:', serializedUser);
+//   const model = mongoose.model(serializedUser.userType);
+
+//   try {
+//     const user = await model.findById(serializedUser.id);
+//     done(null, user);
+//   } catch (error) {
+//     done(error);
+//   }
+// });
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -33,6 +51,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/kaarigar', kaarigarRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
