@@ -9,7 +9,6 @@ var logger = require('morgan');
 var Session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var kaarigarRouter = require('./routes/kaarigar');
 const passport = require('passport');
 const { type } = require('os');
 

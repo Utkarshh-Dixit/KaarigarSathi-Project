@@ -3,11 +3,9 @@ const passport = require('passport');
 const googleMaps = require('@google/maps');
 const axios = require('axios');
 const userModel = require('./users');
-const kaarigarModel = require('./kaarigar');
 var router = express.Router();
 var flash = require('connect-flash');
-const localStrategy = require('passport-local').Strategy;
-passport.use(new localStrategy(kaarigarModel.authenticate()));
+const localStrategy = require('passport-local');
 passport.use(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
@@ -15,8 +13,9 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-router.get('/customer', function(req, res, next) {
-  res.render('customer');
+router.get('/customer', async function(req, res, next) {
+  const users = await userModel.find();
+  res.render('customer', {users});
 });
 
 router.get('/checking', function(req, res, next) {

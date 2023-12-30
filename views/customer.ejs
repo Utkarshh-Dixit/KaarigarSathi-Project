@@ -8,23 +8,27 @@
 </head>
 <body>
     <h1>Here is the list of all the Kaarigars available near you</h1>
-
+    
+    <% users.forEach(function(elem){ %>
+      <% if(elem.selectedOption === 'vendor'){ %>
     <div class="kaarigar">
         <div class="image-container">
           <img class="imageKar" src="/images/Customer2.jpg" alt="">
         </div>
         <div class="details-container">
-          <h3>Kaarigar name</h3>
+          <h3><%=elem.username%></h3>
           <p>Experience: 3 years</p>
-          <h5>Skills: Electrician, Plumber</h5>
-          <p>Address: abc, jdhs, quim, 109021</p>
+          <h5><strong>Profession :- </strong><%=elem.profession%></h5>
+          <p><%=elem.locationName%></p>
           <p>Contact No.: 29848120</p>
         </div>
-        <a href="https://www.google.com/maps/search/?api=1&query=208012">
+        <a href="https://www.google.com/maps/search/?api=1&query=<%=elem.locationName%>">
             <img class="mapIm" src="/images/googlemap.png" alt="">
         </a>
       </div>
-    <div class="kaarigar">
+      <% } %>
+      <% }) %>
+    <!-- <div class="kaarigar">
         <div class="image-container">
           <img class="imageKar" src="/images/Customer2.jpg" alt="">
         </div>
@@ -54,6 +58,6 @@
             <img class="mapIm" src="/images/googlemap.png" alt="">
         </a>
       </div>
-      
+       -->
 </body>
 </html>
