@@ -1,7 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const mongoose = require('mongoose');
 var app = express();
+const flash = require('express-flash');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Session = require('express-session');
@@ -9,12 +11,13 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var kaarigarRouter = require('./routes/kaarigar');
 const passport = require('passport');
+const { type } = require('os');
 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(flash());
 app.use(Session({
   resave: false,
   saveUninitialized: false,
@@ -23,26 +26,34 @@ app.use(Session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-passport.serializeUser(kaarigarRouter.serializeUser());
-passport.deserializeUser(kaarigarRouter.deserializeUser());
-// passport.serializeUser((user, done) => {
-//   console.log('Serializing user:', user);
-//   done(null, { id: user.id, userType: user.constructor.modelName });
+// if(usersRouter){
+  // passport.serializeUser(usersRouter.serializeUser() || kaarigarRouter.serializeUser());
+  // passport.deserializeUser(usersRouter.deserializeUser() || kaarigarRouter.deserializeUser());
+// }
+// if(kaarigarRouter){
+passport.serializeUser(usersRouter.serializeUser());
+passport.deserializeUser(usersRouter.deserializeUser());
+// }
+
+// passport.serializeUser((userr, done) => {
+//   done(null, { id: userr._id, type: userr.constructor.modelName });
 // });
-
 // passport.deserializeUser(async (serializedUser, done) => {
-//   console.log('Deserializing user:', serializedUser);
-//   const model = mongoose.model(serializedUser.userType);
-
+//   const { id, type } = serializedUser;
+//   console.log(id, type);
 //   try {
-//     const user = await model.findById(serializedUser.id);
-//     done(null, user);
+//     let userr;
+//     if (type === 'user') {
+//       userr = await usersRouter.findById(id);
+//     } else if (type === 'kaarigar') {
+//       userr = await kaarigarRouter.findById(id);
+//     }
+
+//     done(null, userr);
 //   } catch (error) {
 //     done(error);
 //   }
 // });
-
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -51,7 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/kaarigar', kaarigarRouter);
+// app.use('/kaarigar', kaarigarRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

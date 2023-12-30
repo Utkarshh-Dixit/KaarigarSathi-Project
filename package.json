@@ -13,6 +13,7 @@
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
     "express-sesssion": "^1.15.5",
     "http-errors": "~1.6.3",

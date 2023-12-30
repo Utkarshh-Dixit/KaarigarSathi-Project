@@ -4,6 +4,14 @@ body, html {
     height: 100%;
   }
   
+.logoutBut{
+  /* border: 1px solid red; */
+  background-color: darkred;
+  color: white;
+  padding: 4px 10px;
+  font-size: 20px;
+}
+
   .pro {
     display: flex;
     flex-direction: column;
@@ -14,7 +22,7 @@ body, html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    /* padding: 10px; */
     background-color: white; /* Adjust the background color as needed */
     color: black; /* Adjust the text color as needed */
   }
