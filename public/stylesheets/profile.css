@@ -51,6 +51,13 @@ html, body {
   cursor: pointer;
   border-radius: 5px;
 }
+
+.logoutBut:hover{
+  background-color: darkred;
+  color: white;
+  text-decoration: none;
+  border: none;
+}
 /* 
 .logoutBut:hover{
   margin: 100px;
