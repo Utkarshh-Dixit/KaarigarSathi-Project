@@ -1,91 +1,153 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-  }
-  
-.logoutBut{
-  /* border: 1px solid red; */
-  background-color: darkred;
-  color: white;
-  padding: 4px 10px;
-  font-size: 20px;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
 
-  .pro {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  
+.pro {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.navbar {
+  background-color: white;
+  color: black;
+  padding: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow the navbar to wrap on smaller screens */
+}
+
+.nav-logo img {
+  max-height: 40px;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-menu li {
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.nav-login-cart a, .nav-menu li a {
+  color: black;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.logoutBut {
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+/* 
+.logoutBut:hover{
+  margin: 100px;
+} */
+
+/* Adjustments for smaller screens */
+@media screen and (max-width: 768px) {
   .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* padding: 10px; */
-    background-color: white; /* Adjust the background color as needed */
-    color: black; /* Adjust the text color as needed */
-  }
-  
-  .nav-menu {
-    list-style-type: none;
-    display: flex;
-  }
-  
-  .nav-menu li {
-    margin-right: 20px; /* Adjust the spacing between menu items */
-    cursor: pointer;
-  }
-  
-  .top {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex: 1;
-    background-color: white; /* Adjust the background color as needed */
-  }
-  
-  .heading {
-    max-width: 50%; /* Limit the width of the heading container */
-    font-size: 33px;
-  }
-  
-  .heading h1 {
-    margin: 0; /* Remove default margin for the heading */
-  }
-  
-  .image-container {
-    max-width: 50%; /* Limit the width of the image container */
-  }
-  
-  .bottom {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 20px; /* Adjust the padding as needed */
-    background-color: white; /* Adjust the background color as needed */
-  }
-  
-  .image-container button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: white; /* Adjust the button background color as needed */
-    padding: 10px;
-    cursor: pointer;
+      flex-direction: column;
+      align-items: center;
   }
 
-  .image-container:hover{
-    border: 3px solid red;
-    cursor: all-scroll;
+  .nav-menu, .nav-login-cart {
+      margin-top: 10px;
   }
-  
-  .image-container span {
-    margin-bottom: 5px; /* Adjust the margin between text and image */
+
+  .nav-menu li, .nav-login-cart a {
+      margin-right: 10px;
   }
-  
-  .image-container img {
-    max-width: 100%;
-    max-height: 100%;
+
+  .logoutBut {
+      margin-top: 10px;
   }
-  
+}
+
+
+.bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* Added to allow wrapping on smaller screens */
+  padding: 10px 0; /* Added padding for spacing */
+}
+
+.bottom span{
+   border: 2px solid black;
+   font-size: 35px;
+   background-color: darkkhaki;
+   color: black;
+}
+
+
+.image-container {
+  width: 30%;
+  margin: 0 10%; /* Adjusted for centering */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-container img {
+  width: 100%; /* Changed to width: 100% for consistency */
+  height: auto;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+}
+
+.heading {
+  max-width: 50%;
+  font-size: 18px;
+  padding: 0 10%;
+}
+
+.image-containerone {
+  width: 50%;
+  padding: 20px;
+}
+
+.image-containerone img {
+  max-width: 100%;
+  height: auto;
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .top {
+      flex-direction: column;
+      align-items: center;
+  }
+
+  .heading, .image-containerone {
+      max-width: 100%;
+  }
+
+  .bottom {
+      flex-direction: column;
+  }
+
+  .image-container {
+      width: 80%; /* Adjusted for mobile layout */
+      margin: 10px 0; /* Adjusted margin for vertical layout */
+  }
+}
