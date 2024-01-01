@@ -2,6 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+  background-color: aqua;
 }
 
 .pro {
@@ -10,8 +11,18 @@ html, body {
   height: 100%;
 }
 
+.home:hover{
+   background-color: aqua;
+   padding: 3px 10px;
+}
+
+.about:hover{
+  background-color: aqua;
+  padding: 3px 10px;
+}
+
 .navbar {
-  background-color: white;
+  background-color: wheat;
   color: black;
   padding: 2px;
   display: flex;
@@ -33,6 +44,7 @@ html, body {
 
 .nav-menu li {
   margin-right: 20px;
+  padding: 3px 10px;
   cursor: pointer;
 }
 
@@ -71,7 +83,7 @@ html, body {
   }
 
   .nav-menu, .nav-login-cart {
-      margin-top: 10px;
+      margin-top: 5px;
   }
 
   .nav-menu li, .nav-login-cart a {
@@ -79,7 +91,7 @@ html, body {
   }
 
   .logoutBut {
-      margin-top: 10px;
+      margin-top: 5px;
   }
 }
 
@@ -99,6 +111,10 @@ html, body {
    color: black;
 }
 
+span:hover{
+  background-color: rgb(194, 184, 43);
+  font-weight: 700;
+}
 
 .image-container {
   width: 30%;
@@ -120,6 +136,8 @@ html, body {
   align-items: center;
   flex: 1;
 }
+
+
 
 .heading {
   max-width: 50%;
