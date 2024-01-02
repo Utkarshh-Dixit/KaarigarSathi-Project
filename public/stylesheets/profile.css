@@ -14,10 +14,14 @@ html, body {
 .home:hover{
    background-color: aqua;
    padding: 3px 10px;
+   font-weight: bolder;
+   font-size: large;
 }
 
 .about:hover{
   background-color: aqua;
+  font-size: large;
+  font-weight: bolder;
   padding: 3px 10px;
 }
 
@@ -25,6 +29,7 @@ html, body {
   background-color: wheat;
   color: black;
   padding: 2px;
+  border: 2px solid brown;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -67,9 +72,15 @@ html, body {
 .logoutBut:hover{
   background-color: darkred;
   color: white;
+  font-size: large;
+  font-weight: bolder;
   text-decoration: none;
   border: none;
 }
+
+/* .KaarigarBut{
+  margin-top: 70px;
+} */
 /* 
 .logoutBut:hover{
   margin: 100px;
@@ -104,10 +115,17 @@ html, body {
   padding: 10px 0; /* Added padding for spacing */
 }
 
+.bottom a:hover{
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
+}
+
 .bottom span{
    border: 2px solid black;
+   padding: 0 20px;
+   border-radius: 15px;
    font-size: 35px;
-   background-color: darkkhaki;
+   background-color: rgb(48, 223, 223);
    color: black;
 }
 

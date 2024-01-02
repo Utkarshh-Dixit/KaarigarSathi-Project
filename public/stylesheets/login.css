@@ -1,5 +1,5 @@
 .form{
-    background-color: lightblue;
+    background-color: aqua;
     min-width: 100px;
     max-width: 500px;
     height: auto;
@@ -13,7 +13,7 @@
 }
 
 .form:hover{
-    background-color: rgb(104, 204, 238);
+    background-color: rgb(0, 240, 240);
 }
 
 
