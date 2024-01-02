@@ -2,6 +2,8 @@ var express = require('express');
 const passport = require('passport');
 const googleMaps = require('@google/maps');
 const axios = require('axios');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 const userModel = require('./users');
 var router = express.Router();
 var flash = require('connect-flash');
@@ -101,52 +103,119 @@ router.post('/save-location', async (req, res) => {
   // }
 });
 
+let transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: 'utkarshdixit.2k21@gmail.com',
+      pass: 'hxzljnowtchasvxu'
+  }
+});
+
+let otpStorage = {};
+
 router.post('/register', async function(req, res){
-  // const { mobile, username, email, name, locationName } = req.body;
-    // const coordinates = await getCoordinates(locationName);
+      const {selectedOption, mobile, username, email, name, locationName} = req.body;
+
+      if (!username || !email || !name || !mobile || !selectedOption || !locationName) {
+        
+        return res.redirect('/');
+      }
+
+      const otp = crypto.randomInt(100000, 999999).toString();
+
+    otpStorage[email] = { ...req.body, otp };
+
+    let mailOptions = {
+        from: 'utkarshdixit.2k21@gmail.com',
+        to: email,
+        subject: 'Your OTP',
+        text: `Your OTP is: ${otp}`
+    };
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            console.log(error);
+            res.send('Error sending OTP');
+        } else {
+            res.render('verifyOtp', { email, username, name, mobile, locationName, selectedOption });
+        }
+    });
+      
+});
+
+
+// const userData = new userModel({
+//   profession: req.body.profession,
+//   selectedOption: selectedOption,
+//    mobile:mobile, 
+//    username: username, 
+//    email: email, 
+//    name:name, 
+//    locationName: locationName 
+//   });
+
+//   userModel.register(userData, req.body.password)
+//     .then(function(){
+//       passport.authenticate("local")(req, res, function(){
+//         res.redirect("/profile");
+//       });
+//     })
+//     .catch(function(err){
+//       // Handle registration errors here
+//       console.error(err);
+//       // Redirect to an error page or handle it as needed
+//       res.redirect('/');
+//     });
+// // }
+
+router.post('/verify-otp', (req, res) => {
+  const { email, otp } = req.body;
+  const userData = otpStorage[email];
+  if (!userData) {
+    return res.send('OTP session expired or invalid.');
+}
+
+
+if (userData.otp === otp) {
+    const newUser = new userModel({
+        selectedOption: userData.selectedOption,
+        mobile: userData.mobile,
+        username: userData.username,
+        email: email,
+        name: userData.name,
+        locationName: userData.locationName
+    });
+    console.log(newUser);
+
     
-    // if (!coordinates) {
-      //   // Handle the case when no coordinates are found
-      //   return res.status(400).send('Error: Could not find coordinates for the provided location name.');
-      // }
-      
-    //   const {selectedOption} = req.body;
-    //   if(selectedOption === "vendor"){
-    //     const kaarigarData = new kaarigarModel({
-    //       selectedOption: selectedOption,
-    //       mobile:req.body.mobile, 
-    //       username: req.body.username, 
-    //       email: req.body.email, 
-    //       name:req.body.name, 
-    //       locationName: req.body.locationName,
-    //       profession: req.body.profession
+    
+  userModel.register(newUser, userData.password)
+  .then(function(){
+    passport.authenticate("local")(req, res, function(){
+      // delete otpStorage[email];
+      res.redirect("/profile");
+    });
+  })
+  .catch(function(err){
+    // Handle registration errors here
+    console.error(err);
+    // Redirect to an error page or handle it as needed
+    res.redirect('/');
+  });
+    // userModel.register(newUser, userData.password, function(err, user) {
+    //     if (err) {
+    //         console.log(err);
+    //         return res.render('index', { errorMessage: 'Error in registration' });
+    //     }
+
+    //     passport.authenticate("local")(req, res, function() {
+    //         delete otpStorage[email];
+    //         res.redirect('/profile'); // Redirect to the profile page after successful registration
     //     });
-    //     kaarigarModel.register(kaarigarData, req.body.password)
-    //       .then(function(){
-    //         passport.authenticate("local")(req, res, function(){
-    //           res.redirect("/profile");
-    //         })
-    //       })
-    // }
-    // else{
-      const {selectedOption} = req.body;
-    const userData = new userModel({
-      profession: req.body.profession,
-      selectedOption: selectedOption,
-       mobile:req.body.mobile, 
-       username: req.body.username, 
-       email: req.body.email, 
-       name:req.body.name, 
-       locationName: req.body.locationName 
-      });
-      userModel.register(userData, req.body.password)
-        .then(function(){
-          passport.authenticate("local")(req, res, function(){
-            res.redirect("/profile");
-          })
-        })
-    // }
-      
+    // });
+} else {
+    res.send('Invalid OTP.');
+}
 });
 
 
