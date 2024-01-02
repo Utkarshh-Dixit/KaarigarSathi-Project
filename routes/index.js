@@ -191,7 +191,9 @@ if (userData.otp === otp) {
     
   userModel.register(newUser, userData.password)
   .then(function(){
+    console.log("yha aa gya");
     passport.authenticate("local")(req, res, function(){
+      console.log("yha bhi aa gya");
       // delete otpStorage[email];
       res.redirect("/profile");
     });
