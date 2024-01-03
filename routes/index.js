@@ -2,6 +2,7 @@ var express = require('express');
 const passport = require('passport');
 const googleMaps = require('@google/maps');
 const axios = require('axios');
+const twilio = require('twilio');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const userModel = require('./users');
@@ -12,7 +13,7 @@ passport.use(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index', {error: ""});
 });
 
 router.get('/customer', async function(req, res, next) {
@@ -103,122 +104,86 @@ router.post('/save-location', async (req, res) => {
   // }
 });
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-      user: 'utkarshdixit.2k21@gmail.com',
-      pass: 'hxzljnowtchasvxu'
+  // let transporter = nodemailer.createTransport({
+  //   service: 'gmail',
+  //   auth: {
+  //       user: 'utkarshdixit.2k21@gmail.com',
+  //       pass: 'hxzljnowtchasvxu'
+  //   }
+  // });
+
+  // let otpStorage = {};
+
+const twilioClient = twilio('ACbdaaa4fea770e8742a52a0764b4cf5e8', 'de41a802edaa78ef7747ba16033e460b');
+
+router.post('/register', async function(req, res) {
+  const { selectedOption, mobile, username, name, locationName } = req.body;
+
+  if (!username || !name || !mobile || !selectedOption || !locationName) {
+    return res.redirect('/');
+  }
+
+  // Generate OTP
+  const otp = crypto.randomInt(100000, 999999).toString();
+
+  // Store user data and OTP in session
+  req.session.userData = {
+    selectedOption,
+    mobile,
+    username,
+    name,
+    locationName,
+    otp
+  };
+
+  // Send OTP via Twilio
+  try {
+    await twilioClient.messages.create({
+      body: `Your OTP is: ${otp}`,
+      from: 'Your Twilio Phone Number',
+      to: `+${mobile}`
+    });
+
+    res.render('verifyOtp', { mobile });
+  } catch (error) {
+    console.error('Error sending OTP via Twilio:', error.message);
+    res.status(500).send('Error sending OTP');
   }
 });
 
-let otpStorage = {};
-
-router.post('/register', async function(req, res){
-      const {selectedOption, mobile, username, email, name, locationName} = req.body;
-
-      if (!username || !email || !name || !mobile || !selectedOption || !locationName) {
-        
-        return res.redirect('/');
-      }
-
-      const otp = crypto.randomInt(100000, 999999).toString();
-
-    otpStorage[email] = { ...req.body, otp };
-
-    let mailOptions = {
-        from: 'utkarshdixit.2k21@gmail.com',
-        to: email,
-        subject: 'Your OTP',
-        text: `Your OTP is: ${otp}`
-    };
-
-    transporter.sendMail(mailOptions, function(error, info) {
-        if (error) {
-            console.log(error);
-            res.send('Error sending OTP');
-        } else {
-            res.render('verifyOtp', { email, username, name, mobile, locationName, selectedOption });
-        }
-    });
-      
-});
-
-
-// const userData = new userModel({
-//   profession: req.body.profession,
-//   selectedOption: selectedOption,
-//    mobile:mobile, 
-//    username: username, 
-//    email: email, 
-//    name:name, 
-//    locationName: locationName 
-//   });
-
-//   userModel.register(userData, req.body.password)
-//     .then(function(){
-//       passport.authenticate("local")(req, res, function(){
-//         res.redirect("/profile");
-//       });
-//     })
-//     .catch(function(err){
-//       // Handle registration errors here
-//       console.error(err);
-//       // Redirect to an error page or handle it as needed
-//       res.redirect('/');
-//     });
-// // }
-
 router.post('/verify-otp', (req, res) => {
-  const { email, otp } = req.body;
-  const userData = otpStorage[email];
+  const { mobile, otp } = req.body;
+  const userData = req.session.userData;
+
   if (!userData) {
     return res.send('OTP session expired or invalid.');
-}
+  }
 
-
-if (userData.otp === otp) {
+  if (userData.otp === otp) {
     const newUser = new userModel({
-        selectedOption: userData.selectedOption,
-        mobile: userData.mobile,
-        username: userData.username,
-        email: email,
-        name: userData.name,
-        locationName: userData.locationName
+      selectedOption: userData.selectedOption,
+      mobile: userData.mobile,
+      username: userData.username,
+      name: userData.name,
+      locationName: userData.locationName
     });
-    console.log(newUser);
 
-    
-    
-  userModel.register(newUser, userData.password)
-  .then(function(){
-    console.log("yha aa gya");
-    passport.authenticate("local")(req, res, function(){
-      console.log("yha bhi aa gya");
-      // delete otpStorage[email];
-      res.redirect("/profile");
-    });
-  })
-  .catch(function(err){
-    // Handle registration errors here
-    console.error(err);
-    // Redirect to an error page or handle it as needed
-    res.redirect('/');
-  });
-    // userModel.register(newUser, userData.password, function(err, user) {
-    //     if (err) {
-    //         console.log(err);
-    //         return res.render('index', { errorMessage: 'Error in registration' });
-    //     }
-
-    //     passport.authenticate("local")(req, res, function() {
-    //         delete otpStorage[email];
-    //         res.redirect('/profile'); // Redirect to the profile page after successful registration
-    //     });
-    // });
-} else {
+    userModel.register(newUser, userData.password)
+      .then(() => {
+        passport.authenticate("local")(req, res, function() {
+          delete req.session.userData;
+          res.redirect("/profile");
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        res.redirect('/', { error: err });
+      });
+  } else {
     res.send('Invalid OTP.');
-}
+  }
 });
+
 
 
 // router.get('/nearby-users', async (req, res) => {
