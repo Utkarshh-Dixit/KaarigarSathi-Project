@@ -5,7 +5,7 @@ const plm = require('passport-local-mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/kaarigarsathi');
 
 const userSchema = mongoose.Schema({
-  // profession: String,
+  profession: String,
   selectedOption: String,
   mobile: {
     type: Number,
@@ -21,8 +21,8 @@ const userSchema = mongoose.Schema({
   locationName: {
     type: String
   },
-  // latitude: Number,
-  // longitude: Number,
+  lat: Number,
+  long: Number,
   email: {
     type: String,
     unique: true,

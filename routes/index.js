@@ -25,8 +25,9 @@ router.get('/checking', function(req, res, next) {
   res.render('checking');
 });
 
-router.get('/kaarigar', function(req, res, next) {
-  res.render('kaarigar');
+router.get('/kaarigar', async function(req, res, next) {
+  const users = await userModel.find();
+  res.render('kaarigar', {users});
 });
 
 router.get('/details', async function(req, res, next) {
@@ -34,7 +35,7 @@ router.get('/details', async function(req, res, next) {
   res.render('details', {user});
 });
 
-router.get('/profile', async function(req, res){
+router.get('/profile', isLoggedIn, async function(req, res){
   
   const user = await userModel.findOne({username: req.session.passport.user});
   // const kaarigar = await kaarigarModel.findOne({username: req.session.passport.kaarigar});
@@ -78,7 +79,7 @@ router.post('/save-location', async (req, res) => {
     // Extract the address or location name from the API response
     const locationName = response.data.display_name;
     console.log(locationName);
-    const user = await userModel.findOneAndUpdate({username: req.session.passport.user}, {locationName: locationName}, {new: true});
+    const user = await userModel.findOneAndUpdate({username: req.session.passport.user}, {locationName: locationName, lat: lat, long: lng}, {new: true});
     await user.save();
     console.log(user);
     res.render('profile');
@@ -117,61 +118,37 @@ router.post('/save-location', async (req, res) => {
 const twilioClient = twilio('ACbdaaa4fea770e8742a52a0764b4cf5e8', 'de41a802edaa78ef7747ba16033e460b');
 
 router.post('/register', async function(req, res) {
-  const { selectedOption, mobile, username, name, locationName } = req.body;
+  const { selectedOption, mobile, username, email, name, locationName, profession } = req.body;
 
-  if (!username || !name || !mobile || !selectedOption || !locationName) {
+  if (!username || !name || !mobile || !email || !selectedOption || !locationName) {
     return res.redirect('/');
   }
-
-  // Generate OTP
-  const otp = crypto.randomInt(100000, 999999).toString();
-
-  // Store user data and OTP in session
-  req.session.userData = {
-    selectedOption,
-    mobile,
-    username,
-    name,
-    locationName,
-    otp
-  };
-
-  // Send OTP via Twilio
-  try {
-    await twilioClient.messages.create({
-      body: `Your OTP is: ${otp}`,
-      from: 'Your Twilio Phone Number',
-      to: `+${mobile}`
+  let newUser;
+  if(profession !== ""){
+      newUser = new userModel({
+      selectedOption: selectedOption,
+      profession: profession,
+      email: email,
+      mobile: mobile,
+      username: username,
+      name: name,
+      locationName: locationName
     });
+  }else{
+        newUser = new userModel({
+        selectedOption: selectedOption,
+        mobile: mobile,
+        email: email,
+        username: username,
+        name: name,
+        locationName: locationName
+      });
 
-    res.render('verifyOtp', { mobile });
-  } catch (error) {
-    console.error('Error sending OTP via Twilio:', error.message);
-    res.status(500).send('Error sending OTP');
-  }
-});
-
-router.post('/verify-otp', (req, res) => {
-  const { mobile, otp } = req.body;
-  const userData = req.session.userData;
-
-  if (!userData) {
-    return res.send('OTP session expired or invalid.');
   }
 
-  if (userData.otp === otp) {
-    const newUser = new userModel({
-      selectedOption: userData.selectedOption,
-      mobile: userData.mobile,
-      username: userData.username,
-      name: userData.name,
-      locationName: userData.locationName
-    });
-
-    userModel.register(newUser, userData.password)
+    userModel.register(newUser, req.body.password)
       .then(() => {
         passport.authenticate("local")(req, res, function() {
-          delete req.session.userData;
           res.redirect("/profile");
         });
       })
@@ -179,10 +156,68 @@ router.post('/verify-otp', (req, res) => {
         console.error(err);
         res.redirect('/', { error: err });
       });
-  } else {
-    res.send('Invalid OTP.');
-  }
+  // Generate OTP
+  // const otp = crypto.randomInt(100000, 999999).toString();
+
+  // // Store user data and OTP in session
+  // req.session.userData = {
+  //   selectedOption,
+  //   mobile,
+  //   username,
+  //   name,
+  //   locationName,
+  //   otp
+  // };
+
+
+
+  // // Send OTP via Twilio
+  // try {
+  //   await twilioClient.messages.create({
+  //     body: `Your OTP is: ${otp}`,
+  //     from: '+916394924092',
+  //     to: `+${mobile}`
+  //   });
+
+  //   res.render('verifyOtp', { mobile });
+  // } catch (error) {
+  //   console.error('Error sending OTP via Twilio:', error.message);
+  //   res.status(500).send('Error sending OTP');
+  // }
 });
+
+// router.post('/verify-otp', (req, res) => {
+//   const { mobile, otp } = req.body;
+//   const userData = req.session.userData;
+
+//   if (!userData) {
+//     return res.send('OTP session expired or invalid.');
+//   }
+
+//   if (userData.otp === otp) {
+//     const newUser = new userModel({
+//       selectedOption: userData.selectedOption,
+//       mobile: userData.mobile,
+//       username: userData.username,
+//       name: userData.name,
+//       locationName: userData.locationName
+//     });
+
+//     userModel.register(newUser, userData.password)
+//       .then(() => {
+//         passport.authenticate("local")(req, res, function() {
+//           delete req.session.userData;
+//           res.redirect("/profile");
+//         });
+//       })
+//       .catch((err) => {
+//         console.error(err);
+//         res.redirect('/', { error: err });
+//       });
+//   } else {
+//     res.send('Invalid OTP.');
+//   }
+// });
 
 
 

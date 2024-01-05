@@ -133,6 +133,10 @@ span:hover{
   background-color: rgb(194, 184, 43);
   font-weight: 700;
 }
+.image-container:hover{
+  background-color: rgb(194, 184, 43);
+  font-weight: 700;
+}
 
 .image-container {
   width: 30%;

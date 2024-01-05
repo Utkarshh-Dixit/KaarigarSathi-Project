@@ -4,8 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/customer.css">
 </head>
 <body>
-    Kaarigar ka page
+    <h1>Here is the list of customers near you</h1>
+
+    <!-- Add a search bar -->
+    <input type="text" id="searchInput" class="search-bar" placeholder="Search by profession">
+
+    <% users.forEach(function(elem){ %>
+      <% if(elem.selectedOption === 'Customer'){ %>
+        <!-- Add a class based on profession for filtering -->
+        <div class="kaarigar">
+            <div class="image-container">
+              <img class="imageKar" src="/images/Customer2.jpg" alt="">
+            </div>
+            <div class="details-container">
+              <h3><%=elem.username%></h3>
+              <p>Requirements: <%=elem.requirements%> </p>
+              <p><%=elem.locationName%></p>
+              <a href="tel:<%=elem.mobile%>">Call Now</a>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=<%=elem.lat%>,<%=elem.long%>">
+                <img class="mapIm" src="/images/googlemap.png" alt="">
+            </a>
+        </div>
+      <% } %>
+    <% }) %>
+<!-- 
+    <script>
+      document.getElementById('searchInput').addEventListener('input', function() {
+          var searchValue = this.value.toLowerCase();
+          var kaarigars = document.querySelectorAll('.kaarigar');
+  
+          kaarigars.forEach(function(kaarigar) {
+              var professionElement = kaarigar.querySelector('.details-container h5 span');
+              
+              // Check if the profession element exists before trying to access its text content
+              if (professionElement) {
+                  var profession = professionElement.innerText.toLowerCase();
+                  if (profession.includes(searchValue)) {
+                      kaarigar.style.display = 'block';
+                  } else {
+                      kaarigar.style.display = 'none';
+                  }
+              }
+          });
+      });
+  </script> -->
 </body>
 </html>
