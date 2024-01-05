@@ -18,8 +18,24 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/customer', async function(req, res, next) {
+//   try {
+//     const currentKaarigarType = req.params.kaarigarType;
+//     const currentDateTime = new Date();
+
+//     const activeRequirements = await Requirement.find({
+//         kaarigarType: currentKaarigarType,
+//         expiresAt: { $gt: currentDateTime }
+//     }).populate('customerId'); // This populates the user details
+
+//     res.render('customer', { activeRequirements });
+// } catch (err) {
+//     console.error(err);
+//     res.status(500).send('Error retrieving requirements');
+// }
+
+const kaarigarType = req.params.kaarigarType;
   const users = await userModel.find();
-  res.render('customer', {users});
+  res.render('customer', {users, kaarigarType});
 });
 
 router.post('/post-requirement', async (req, res) => {
@@ -29,7 +45,7 @@ router.post('/post-requirement', async (req, res) => {
       const expiresAt = new Date(createdAt.getTime() + (48 * 60 * 60 * 1000)); // 48 hours from now
 
       const newRequirement = new Requirement({
-          customerID: req.user._id, // Assuming you have the user's ID from the session
+          customerId: req.user._id, // Assuming you have the user's ID from the session
           kaarigarType,
           description,
           createdAt,
@@ -37,7 +53,7 @@ router.post('/post-requirement', async (req, res) => {
       });
 
       await newRequirement.save();
-      res.redirect('/some-page'); // Redirect after saving
+      res.redirect('/customer'); // Redirect after saving
   } catch (err) {
       console.error(err);
       res.status(500).send('Error posting requirement');
@@ -46,6 +62,10 @@ router.post('/post-requirement', async (req, res) => {
 
 router.get('/checking', function(req, res, next) {
   res.render('checking');
+});
+
+router.get('/requirement', function(req, res, next) {
+  res.render('requirement');
 });
 
 router.get('/kaarigar', async function(req, res, next) {
