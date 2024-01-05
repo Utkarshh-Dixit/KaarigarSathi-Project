@@ -6,6 +6,7 @@ const twilio = require('twilio');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const userModel = require('./users');
+const Requirement = require('./requirements');
 var router = express.Router();
 var flash = require('connect-flash');
 const localStrategy = require('passport-local');
@@ -19,6 +20,28 @@ router.get('/', function(req, res, next) {
 router.get('/customer', async function(req, res, next) {
   const users = await userModel.find();
   res.render('customer', {users});
+});
+
+router.post('/post-requirement', async (req, res) => {
+  try {
+      const { kaarigarType, description } = req.body;
+      const createdAt = new Date();
+      const expiresAt = new Date(createdAt.getTime() + (48 * 60 * 60 * 1000)); // 48 hours from now
+
+      const newRequirement = new Requirement({
+          customerID: req.user._id, // Assuming you have the user's ID from the session
+          kaarigarType,
+          description,
+          createdAt,
+          expiresAt
+      });
+
+      await newRequirement.save();
+      res.redirect('/some-page'); // Redirect after saving
+  } catch (err) {
+      console.error(err);
+      res.status(500).send('Error posting requirement');
+  }
 });
 
 router.get('/checking', function(req, res, next) {
@@ -115,7 +138,7 @@ router.post('/save-location', async (req, res) => {
 
   // let otpStorage = {};
 
-const twilioClient = twilio('ACbdaaa4fea770e8742a52a0764b4cf5e8', 'de41a802edaa78ef7747ba16033e460b');
+// const twilioClient = twilio('ACbdaaa4fea770e8742a52a0764b4cf5e8', 'de41a802edaa78ef7747ba16033e460b');
 
 router.post('/register', async function(req, res) {
   const { selectedOption, mobile, username, email, name, locationName, profession } = req.body;
