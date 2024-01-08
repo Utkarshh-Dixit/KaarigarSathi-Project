@@ -46,7 +46,7 @@ router.post('/post-requirement', async (req, res) => {
       const expiresAt = new Date(createdAt.getTime() + (48 * 60 * 60 * 1000)); // 48 hours from now
 
       const newRequirement = new Requirement({
-          customerId: req.user._id, // Assuming you have the user's ID from the session
+          User: req.user._id, // Assuming you have the user's ID from the session
           kaarigarType,
           description,
           createdAt,
@@ -71,8 +71,9 @@ router.get('/requirement', function(req, res, next) {
 });
 
 router.get('/kaarigar', async function(req, res, next) {
-  const users = await userModel.find();
-  res.render('kaarigar', {users});
+  const requirements = await Requirement.find().populate("User");
+  console.log(requirements);
+  res.render('kaarigar', {requirements});
 });
 
 router.get('/details', async function(req, res, next) {

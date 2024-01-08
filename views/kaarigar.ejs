@@ -7,29 +7,25 @@
     <link rel="stylesheet" href="/stylesheets/customer.css">
 </head>
 <body>
-    <h1>Here is the list of customers near you</h1>
+    <a href="/profile" style="background-color: brown; color: whitesmoke; padding: 4px;">Go to Home page</a>
+    <h1>Here is the list of customers near you </h1>
 
-    <!-- Add a search bar -->
-    <input type="text" id="searchInput" class="search-bar" placeholder="Search by profession">
-
-    <% users.forEach(function(elem){ %>
-      <% if(elem.selectedOption === 'Customer'){ %>
-        <!-- Add a class based on profession for filtering -->
+    <% requirements.forEach(function(elem){ %>
         <div class="kaarigar">
             <div class="image-container">
               <img class="imageKar" src="/images/Customer2.jpg" alt="">
             </div>
             <div class="details-container">
-              <h3><%=elem.username%></h3>
-              <p>Requirements: <%=elem.requirements%> </p>
-              <p><%=elem.locationName%></p>
-              <a href="tel:<%=elem.mobile%>">Call Now</a>
+              <h3><%=elem.User.name%> needs a <%=elem.kaarigarType%></h3>
+              <h5><%=elem.description%></h5>
+              <p></p>
+              <p><%=elem.User.locationName%></p>
+              <a href="tel:<%=elem.User.mobile%>">Call Now</a>
             </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=<%=elem.lat%>,<%=elem.long%>">
+            <a href="https://www.google.com/maps/search/?api=1&query=<%=elem.User.lat%>,<%=elem.User.long%>">
                 <img class="mapIm" src="/images/googlemap.png" alt="">
             </a>
         </div>
-      <% } %>
     <% }) %>
 <!-- 
     <script>

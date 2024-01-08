@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const requirementSchema = mongoose.Schema({
-    customerId: {
+    User: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // Assuming you have a User model
         required: true
