@@ -33,9 +33,10 @@ router.get('/customer', async function(req, res, next) {
 //     res.status(500).send('Error retrieving requirements');
 // }
 
-const kaarigarType = req.params.kaarigarType;
+const successMessage = req.flash('success')[0];
+
   const users = await userModel.find();
-  res.render('customer', {users, kaarigarType});
+  res.render('customer', {users, successMessage});
 });
 
 router.post('/post-requirement', async (req, res) => {
@@ -53,6 +54,7 @@ router.post('/post-requirement', async (req, res) => {
       });
 
       await newRequirement.save();
+      req.flash('success', 'Requirements posted successfully.');
       res.redirect('/customer'); // Redirect after saving
   } catch (err) {
       console.error(err);

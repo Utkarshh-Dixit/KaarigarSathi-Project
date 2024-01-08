@@ -18,6 +18,12 @@ body {
   margin-bottom: 10px;
 }
 
+.rqrmnt{
+  font-size: larger;
+  display: flex;
+  justify-content: center;
+}
+
 .kaarigar {
   background-color: wheat;
   display: flex;

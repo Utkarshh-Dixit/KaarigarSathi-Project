@@ -9,6 +9,14 @@
 <body>
     <h1>Here is the list of all the Kaarigars available near you</h1>
 
+    <% if (successMessage) { %>
+      <script>
+          alert('<%= successMessage %>');
+      </script>
+  <% } %>
+
+    <a href="/requirement" class="rqrmnt">Not finding any Kaarigar ? Click here to post your requirement</a>
+
     <!-- Add a search bar -->
     <input type="text" id="searchInput" class="search-bar" value="" placeholder="Search by profession">
 
