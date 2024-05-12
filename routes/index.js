@@ -9,8 +9,6 @@ const userModel = require('./users');
 const Requirement = require('./requirements');
 var router = express.Router();
 var flash = require('connect-flash');
-const localStrategy = require('passport-local');
-passport.use(new localStrategy(userModel.authenticate()));
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -68,6 +66,50 @@ router.get('/checking', function(req, res, next) {
 
 router.get('/requirement', function(req, res, next) {
   res.render('requirement');
+});
+
+router.get('/about', function(req, res){
+  res.render('about');
+})
+
+router.get('/cv', function(req, res){
+  res.render('check');
+})
+
+router.post('/check/sendVerificationCode', async (req, res) => {
+  try {
+    const { mobile } = req.body;
+
+    const sessionCookie = await admin.auth().createSessionCookie(mobile, { expiresIn: 5 * 60 * 1000 });
+    
+    res.cookie('session', sessionCookie, { expires: new Date(Date.now() + 5 * 60 * 1000), httpOnly: true });
+    res.status(200).json({ message: 'Verification code sent successfully.' });
+    res.redirect('/checkverify');
+  } catch (error) {
+    console.error('Error sending verification code:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post('/check/verifyCode', async (req, res) => {
+  try {
+    const { code } = req.body;
+
+    const sessionCookie = req.cookies.session || '';
+    const user = await admin.auth().verifySessionCookie(sessionCookie);
+    const userFromDB = await userModel.findOne({ mobile: user.mobile });
+
+    if (userFromDB && userFromDB.verificationCode === code) {
+      // Code is valid
+      res.status(200).json({ message: 'Code verified successfully.', user });
+    } else {
+      // Code is invalid
+      res.status(400).json({ error: 'Invalid verification code.' });
+    }
+  } catch (error) {
+    console.error('Error verifying code:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 router.get('/kaarigar', async function(req, res, next) {
@@ -163,74 +205,74 @@ router.post('/save-location', async (req, res) => {
 
 // const twilioClient = twilio('ACbdaaa4fea770e8742a52a0764b4cf5e8', 'de41a802edaa78ef7747ba16033e460b');
 
-router.post('/register', async function(req, res) {
-  const { selectedOption, mobile, username, email, name, locationName, profession } = req.body;
+  router.post('/register', async function(req, res) {
+    const { selectedOption, mobile, username, email, name, locationName, profession } = req.body;
 
-  if (!username || !name || !mobile || !email || !selectedOption || !locationName) {
-    return res.redirect('/');
-  }
-  let newUser;
-  if(profession !== ""){
-      newUser = new userModel({
-      selectedOption: selectedOption,
-      profession: profession,
-      email: email,
-      mobile: mobile,
-      username: username,
-      name: name,
-      locationName: locationName
-    });
-  }else{
+    if (!username || !name || !mobile || !email || !selectedOption || !locationName) {
+      return res.redirect('/');
+    }
+    let newUser;
+    if(profession !== ""){
         newUser = new userModel({
         selectedOption: selectedOption,
-        mobile: mobile,
+        profession: profession,
         email: email,
+        mobile: mobile,
         username: username,
         name: name,
         locationName: locationName
       });
-
-  }
-
-    userModel.register(newUser, req.body.password)
-      .then(() => {
-        passport.authenticate("local")(req, res, function() {
-          res.redirect("/profile");
+    }else{
+          newUser = new userModel({
+          selectedOption: selectedOption,
+          mobile: mobile,
+          email: email,
+          username: username,
+          name: name,
+          locationName: locationName
         });
-      })
-      .catch((err) => {
-        console.error(err);
-        res.redirect('/', { error: err });
-      });
-  // Generate OTP
-  // const otp = crypto.randomInt(100000, 999999).toString();
 
-  // // Store user data and OTP in session
-  // req.session.userData = {
-  //   selectedOption,
-  //   mobile,
-  //   username,
-  //   name,
-  //   locationName,
-  //   otp
-  // };
+    }
+
+      userModel.register(newUser, req.body.password)
+        .then(() => {
+          passport.authenticate("local")(req, res, function() {
+            res.redirect("/profile");
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+          res.redirect('/', { error: err });
+        });
+    // Generate OTP
+    // const otp = crypto.randomInt(100000, 999999).toString();
+
+    // // Store user data and OTP in session
+    // req.session.userData = {
+    //   selectedOption,
+    //   mobile,
+    //   username,
+    //   name,
+    //   locationName,
+    //   otp
+    // };
 
 
 
-  // // Send OTP via Twilio
-  // try {
-  //   await twilioClient.messages.create({
-  //     body: `Your OTP is: ${otp}`,
-  //     from: '+916394924092',
-  //     to: `+${mobile}`
-  //   });
+    // // Send OTP via Twilio
+    // try {
+    //   await twilioClient.messages.create({
+    //     body: `Your OTP is: ${otp}`,
+    //     from: '+916394924092',
+    //     to: `+${mobile}`
+    //   });
 
-  //   res.render('verifyOtp', { mobile });
-  // } catch (error) {
-  //   console.error('Error sending OTP via Twilio:', error.message);
-  //   res.status(500).send('Error sending OTP');
-  // }
-});
+    //   res.render('verifyOtp', { mobile });
+    // } catch (error) {
+    //   console.error('Error sending OTP via Twilio:', error.message);
+    //   res.status(500).send('Error sending OTP');
+    // }
+  });
 
 // router.post('/verify-otp', (req, res) => {
 //   const { mobile, otp } = req.body;

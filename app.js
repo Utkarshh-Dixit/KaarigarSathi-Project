@@ -1,3 +1,4 @@
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -10,7 +11,41 @@ var Session = require('express-session');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 const { type } = require('os');
+// Import the functions you need from the SDKs you need
+
+
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCTU-pVG1csyuk866FvbPUJgpfPp0QaBNo",
+//   authDomain: "kaarigar-sathi.firebaseapp.com",
+//   projectId: "kaarigar-sathi",
+//   storageBucket: "kaarigar-sathi.appspot.com",
+//   messagingSenderId: "59795869714",
+//   appId: "1:59795869714:web:14f85c18628441fb1a48cb",
+//   measurementId: "G-MCYC9J5YPX"
+// };
+
+// Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const analytics = getAnalytics(app);
+
+// var admin = require("firebase-admin");
+
+// var serviceAccount = require("fire.json");
+
+const localStrategy = require('passport-local');
+passport.use(new localStrategy(usersRouter.authenticate()));
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount)
+// });
+
 
 
 // view engine setup
@@ -56,6 +91,8 @@ passport.deserializeUser(usersRouter.deserializeUser());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

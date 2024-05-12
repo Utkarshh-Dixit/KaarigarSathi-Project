@@ -2,7 +2,8 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: aqua;
+  /* background-color: aqua; */
+  background: linear-gradient(to right, rgb(243, 222, 243), aqua);
 }
 
 .pro {
@@ -26,7 +27,7 @@ html, body {
 }
 
 .navbar {
-  background-color: wheat;
+  background: linear-gradient(to right, wheat, #3ee282);
   color: black;
   padding: 2px;
   border: 2px solid brown;
@@ -60,7 +61,7 @@ html, body {
 }
 
 .logoutBut {
-  background-color: red;
+  background-color: rgb(255, 15, 15);
   color: white;
   padding: 5px 10px;
   text-decoration: none;
@@ -70,7 +71,7 @@ html, body {
 }
 
 .logoutBut:hover{
-  background-color: darkred;
+  background-color: rgb(255, 4, 4);
   color: white;
   font-size: large;
   font-weight: bolder;

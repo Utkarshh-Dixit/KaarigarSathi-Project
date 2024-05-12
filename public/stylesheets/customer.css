@@ -1,5 +1,6 @@
 body {
-  background-color: aqua;
+  /* background-color: aqua; */
+  background: linear-gradient(to right, aqua, #f7f7f7);
 }
 
 /* Add a class for the search bar background */
@@ -25,7 +26,7 @@ body {
 }
 
 .kaarigar {
-  background-color: wheat;
+  background: linear-gradient(to right, wheat, #eef779);
   display: flex;
   align-items: center;
   border: 2px solid black;
@@ -34,7 +35,7 @@ body {
 }
 
 .kaarigar:hover{
-  background-color: rgb(245, 203, 125);
+  background: rgb(224, 159, 37);
 }
 
 .mapIm {

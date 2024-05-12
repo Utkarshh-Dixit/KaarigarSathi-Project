@@ -1,49 +1,92 @@
-.form{
-    background-color: aqua;
-    min-width: 100px;
-    max-width: 500px;
-    height: auto;
-    margin: auto;
-    justify-content: center;
-    font-size: large;
+body {
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
+  min-width: 100px;
 }
 
-.LoginPa{
-    text-align: center;
+.form {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  max-width: 500px;
+  height: auto;
+  margin: auto;
+  justify-content: center;
+  font-size: large;
 }
 
-.form:hover{
-    background-color: rgb(0, 240, 240);
+.LoginPa {
+  text-align: center;
 }
 
+.profileSelection {
+  margin: 0px;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+}
 
-.Head{
-    font-size: 50px;
-    background-color: yellow;
-    /* background-color: darkblue; */
-    font-family: 'Courier New', Courier, monospace;
-    text-shadow: 2px 2px;
-    
+.profileSelect {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form:hover {
+  background-color: rgb(0, 240, 240);
+}
+
+.Head {
+  font-size: 50px;
+  font-weight: 600;
+  font-family: "Courier New", Courier, monospace;
+  text-shadow: 2px 2px;
 }
 /* 
 option{
     color: black;
 } */
 
-.user{
-    margin: 30px;
-    padding-left: 20px;
-    padding-right: 20px;
-    /* padding-bottom: 10px; */
-    border-radius: 20px;
-    background-color: white;
+.user {
+  margin: 30px;
+  font-weight: 800;
+  padding-left: 20px;
+  padding-right: 20px;
+  /* padding-bottom: 10px; */
+  border-radius: 20px;
+  font-style: oblique;
 }
 
-.form>button{
-    font-size: large;
-    color: black;
+.form > button {
+  font-size: large;
+  width: auto;
+  border-radius: 20px;
+  padding: 0 20px;
+  font-weight: 500;
+  color: black;
+  background: rgb(131, 58, 180);
+  background: linear-gradient(
+    90deg,
+    rgba(131, 58, 180, 1) 0%,
+    rgba(253, 29, 29, 1) 50%,
+    rgba(252, 176, 69, 1) 100%
+  );
 }
 
-.form>button:hover{
-    background-color: red;
+.form > button:hover {
+  background: rgb(131, 58, 180);
+  cursor: pointer;
+}
+
+.inputForLogin {
+  background: none;
+  border-radius: 20px;
+  font-size: 15px;
 }
