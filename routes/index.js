@@ -51,7 +51,6 @@ router.post("/accessChat", async function (req, res) {
       const fullChat = await chatModel
         .findOne({ _id: newChat._id })
         .populate("users", "-password");
-
       res.status(200).send(fullChat);
     } catch (err) {
       res.status(400);
@@ -60,7 +59,25 @@ router.post("/accessChat", async function (req, res) {
   }
 });
 
-router.get("/fetchChat", function (req, res) {});
+router.get("/fetchChat", function (req, res) {
+  try {
+    chatModel
+      .find({ users: { $elemMatch: { $eq: req.user._id } } })
+      .populate("users", "-password")
+      .populate("latestMessage")
+      .sort({ updatedAt: -1 })
+      .then(async (result) => {
+        result = await userModel.populate(result, {
+          path: "latestMessage.sender",
+          select: "name mobile",
+        });
+        res.status(200).send(result);
+      });
+  } catch (err) {
+    res.status(400);
+    throw new Error(err.message);
+  }
+});
 
 router.get("/customer", async function (req, res, next) {
   const successMessage = req.flash("success")[0];

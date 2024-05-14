@@ -3,8 +3,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  /* background-color: aqua; */
-  background: linear-gradient(to right, rgb(243, 222, 243), aqua);
+  background-color: aqua;
+  /* background: linear-gradient(to right, rgb(164, 248, 248), aqua); */
 }
 
 .pro {
