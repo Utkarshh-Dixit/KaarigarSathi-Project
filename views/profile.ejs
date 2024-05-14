@@ -1,94 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesheets/profile.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/stylesheets/profile.css" />
     <title>Document</title>
-
-</head>
-<body>
+  </head>
+  <body>
     <div class="pro">
-    <div class='navbar'>
-        <div class='nav-logo'>
-            <img src="/images/logo.png" alt="" />
+      <div class="navbar">
+        <div class="nav-logo">
+          <img src="/images/logo.png" alt="" />
         </div>
         <ul class="nav-menu">
-            <a href="/profile"><li class="home" >Home</li></a>
-            <a href="/about"><li class="about">About</li></a>
+          <a href="/profile"><li class="home">Home</li></a>
+          <a href="/about"><li class="about">About</li></a>
         </ul>
-        <div class='nav-login-cart'>
-            <a class="about" href="/details">View your profile</a> 
-        </div>
-        
-            <a class="logoutBut" href="/logout">
-                Logout
-            <!-- <li class="logoutBut">Logout</li> -->
-            </a>
-
-    </div>
-    <div class='top'>
-
-        <div class='heading'>
-          <h1>A Smart way to <br/>
-            find and provide <br/>
-             work to Kaarigar<br/>
-            near you</h1>
+        <div class="nav-login-cart">
+          <a class="about" href="/details">View your profile</a>
         </div>
 
-        <div id="imageContainer" class='image-containerone'>
-            <img src="/images/newiconforhome.png" alt="" />
+        <a class="logoutBut" href="/logout">
+          Logout
+          <!-- <li class="logoutBut">Logout</li> -->
+        </a>
+      </div>
+      <form action="/accessChat" method="post">
+        <input
+          type="text"
+          name="userId"
+          id="chat"
+          placeholder="Enter your id"
+          required
+        />
+        <button>Let's go</button>
+      </form>
+      <div class="top">
+        <div class="heading">
+          <h1>
+            A Smart way to <br />
+            find and provide <br />
+            work to Kaarigar<br />
+            near you
+          </h1>
         </div>
+
+        <div id="imageContainer" class="image-containerone">
+          <img src="/images/newiconforhome.png" alt="" />
+        </div>
+      </div>
+      <div class="bottom">
+        <a href="/customer" class="image-container">
+          <span>Customer</span>
+          <img src="/images/customer_icon.png" alt="" />
+        </a>
+
+        <a href="/kaarigar" class="image-container">
+          <span class="KaarigarBut">Kaarigar</span>
+          <img src="/images/Kaarigaricon.png" alt="" />
+        </a>
+      </div>
     </div>
-    <div class="bottom">
-        
-         <a href="/customer" class="image-container">
-             <span>Customer</span>
-             <img src="/images/customer_icon.png" alt="" />
-         </a>
-        
-             <a href="/kaarigar" class="image-container">
-                 <span class="KaarigarBut">Kaarigar</span>
-                 <img src="/images/Kaarigaricon.png" alt="" />
-             </a>
-    </div>
-</div>
     <!-- <button id="getLocationButton">Get My Location</button> -->
 
     <script>
-        document.getElementById('getLocationButton').addEventListener('click', () => {
-            // Call a function to get the user's location
-            getUserLocation();
+      document
+        .getElementById("getLocationButton")
+        .addEventListener("click", () => {
+          // Call a function to get the user's location
+          getUserLocation();
         });
     </script>
     <script>
-       
-        function getUserLocation() {
+      function getUserLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                // Handle the user's location
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              // Handle the user's location
+              const lat = position.coords.latitude;
+              const lng = position.coords.longitude;
 
-                // Send location data to the server
-                fetch(`/save-location?lat=${lat}&lng=${lng}`, {
-                    method: 'POST',
+              // Send location data to the server
+              fetch(`/save-location?lat=${lat}&lng=${lng}`, {
+                method: "POST",
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log("Location saved:", data);
                 })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Location saved:', data);
-                })
-                .catch(error => {
-                    console.error('Error saving location:', error.message);
+                .catch((error) => {
+                  console.error("Error saving location:", error.message);
                 });
-            }, (error) => {
-                console.error('Error getting user location:', error.message);
-            });
+            },
+            (error) => {
+              console.error("Error getting user location:", error.message);
+            }
+          );
         } else {
-            console.error('Geolocation is not supported by this browser.');
+          console.error("Geolocation is not supported by this browser.");
         }
-    }
+      }
     </script>
-
-</body>
+  </body>
 </html>

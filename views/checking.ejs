@@ -1,70 +1,20 @@
-<!-- views/index.ejs -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Cursor Example</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
-  
-    #imageContainer {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-    }
-  
-    #mainImage {
-      width: 100%;
-      height: 100%;
-    }
-
-  
-    #cursorImage {
-      position: absolute;
-      width: 50px; /* Adjust the width of the cursor image */
-      height: 50px; /* Adjust the height of the cursor image */
-      background-image: url('/images/cursorimage.png'); /* Replace with your cursor image path */
-      background-size: cover;
-      display: none;
-      cursor: none;
-    }
-  </style>
-  
-</head>
-<body>
-  <div id="imageContainer">
-    <img id="mainImage" src="/images/newiconforhome.png" alt="Main Image">
-    <div id="cursorImage"><img src="" alt="" /></div>
-  </div>
-
-  <script>
-    let cursorImageVisible = false;
-  
-    const imageContainer = document.getElementById('imageContainer');
-    const cursorImage = document.getElementById('cursorImage');
-  
-    imageContainer.addEventListener('mousemove', (e) => {
-      const { clientX: x, clientY: y } = e;
-      cursorImage.style.left = `${x}px`;
-      cursorImage.style.top = `${y}px`;
-    });
-  
-    imageContainer.addEventListener('mouseenter', () => {
-      cursorImage.style.display = 'block';
-    });
-  
-    imageContainer.addEventListener('mouseleave', () => {
-      cursorImage.style.display = 'none';
-    });
-  
-    imageContainer.addEventListener('dblclick', () => {
-      cursorImageVisible = !cursorImageVisible;
-      cursorImage.style.display = cursorImageVisible ? 'block' : 'none';
-    });
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/accessChat" method="post">
+      <input
+        type="text"
+        name="userId"
+        id="chat"
+        placeholder="Enter your id"
+        required
+      />
+      <button>Let's go</button>
+    </form>
+  </body>
 </html>

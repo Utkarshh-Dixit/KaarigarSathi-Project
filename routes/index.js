@@ -9,28 +9,60 @@ const userModel = require("./users");
 const Requirement = require("./requirements");
 var router = express.Router();
 var flash = require("connect-flash");
+const chatModel = require("./chatModel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { error: "" });
 });
 
+router.post("/accessChat", async function (req, res) {
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: "User ID is required." });
+  }
+
+  var isChat = await chatModel
+    .find({
+      $and: [
+        { users: { $elemMatch: { $eq: req.user._id } } },
+        { users: { $elemMatch: { $eq: userId } } },
+      ],
+    })
+    .populate("users", "-password")
+    .populate("latestMessage");
+
+  isChat = await userModel.populate(isChat, {
+    path: "latestMessage.sender",
+    select: "name mobile",
+  });
+
+  if (isChat.length > 0) {
+    res.send(isChat[0]);
+  } else {
+    var chatData = {
+      chatName: "sender",
+      users: [req.user._id, userId],
+    };
+
+    try {
+      const newChat = await chatModel.create(chatData);
+      const fullChat = await chatModel
+        .findOne({ _id: newChat._id })
+        .populate("users", "-password");
+
+      res.status(200).send(fullChat);
+    } catch (err) {
+      res.status(400);
+      throw new Error(err.message);
+    }
+  }
+});
+
+router.get("/fetchChat", function (req, res) {});
+
 router.get("/customer", async function (req, res, next) {
-  //   try {
-  //     const currentKaarigarType = req.params.kaarigarType;
-  //     const currentDateTime = new Date();
-
-  //     const activeRequirements = await Requirement.find({
-  //         kaarigarType: currentKaarigarType,
-  //         expiresAt: { $gt: currentDateTime }
-  //     }).populate('customerId'); // This populates the user details
-
-  //     res.render('customer', { activeRequirements });
-  // } catch (err) {
-  //     console.error(err);
-  //     res.status(500).send('Error retrieving requirements');
-  // }
-
   const successMessage = req.flash("success")[0];
 
   const users = await userModel.find();
