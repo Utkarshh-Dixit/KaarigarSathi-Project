@@ -16,6 +16,38 @@ router.get("/", function (req, res, next) {
   res.render("index", { error: "" });
 });
 
+router.get("/chat/:id", async function (req, res) {
+  const useridd = await userModel.findOne({
+    _id: req.params.id,
+  });
+  res.render("chatPage", { useridd });
+});
+
+// Add a new route for sending messages
+router.post("/send-message", async (req, res) => {
+  const { chatId, sender, content } = req.body;
+
+  try {
+    // Create a new message document
+    const newMessage = new Message({
+      sender,
+      content,
+      chat: chatId,
+    });
+
+    // Save the message to the database
+    await newMessage.save();
+
+    // Update the latest message in the chat
+    await Chat.findByIdAndUpdate(chatId, { latestMessage: newMessage._id });
+
+    res.status(200).json({ success: true, message: newMessage });
+  } catch (error) {
+    console.error("Error sending message:", error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 router.post("/accessChat", async function (req, res) {
   const { userId } = req.body;
 

@@ -1,67 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/stylesheets/customer.css">
-</head>
-<body>
-  <a href="/profile" style="background-color: brown; color: whitesmoke; padding: 4px;">Go to Home page</a>
+    <link rel="stylesheet" href="/stylesheets/customer.css" />
+  </head>
+  <body>
+    <a
+      href="/profile"
+      style="background-color: brown; color: whitesmoke; padding: 4px"
+      >Go to Home page</a
+    >
 
     <h1>Here is the list of all the Kaarigars available near you</h1>
 
     <% if (successMessage) { %>
-      <script>
-          alert('<%= successMessage %>');
-      </script>
-  <% } %>
+    <script>
+      alert("<%= successMessage %>");
+    </script>
+    <% } %>
 
-    <a href="/requirement" class="rqrmnt">Not finding any Kaarigar ? Click here to post your requirement</a>
+    <a href="/requirement" class="rqrmnt"
+      >Not finding any Kaarigar ? Click here to post your requirement</a
+    >
 
     <!-- Add a search bar -->
-    <input type="text" id="searchInput" class="search-bar" value="" placeholder="Search by profession">
+    <input
+      type="text"
+      id="searchInput"
+      class="search-bar"
+      value=""
+      placeholder="Search by profession"
+    />
 
-    <% users.forEach(function(elem){ %>
-      <% if(elem.selectedOption === 'vendor'){ %>
-        <!-- Add a class based on profession for filtering -->
-        <div class="kaarigar <%= elem.profession.toLowerCase() %>">
-            <div class="image-container">
-              <img class="imageKar" src="/images/Customer2.jpg" alt="">
-            </div>
-            <div class="details-container">
-              <h3><%=elem.name%>(<%=elem.username%>)</h3>
-              <p>Experience: <%=elem.experience%> years</p>
-              <h5><strong>Profession :- </strong><span><%=elem.profession%></span></h5>
-              <p><%=elem.locationName%></p>
-              <a href="tel:<%=elem.mobile%>">Call Now</a>
-            </div>
-            <a href="https://www.google.com/maps/search/?api=1&query=<%=elem.locationName%>">
-                <img class="mapIm" src="/images/googlemap.png" alt="">
-            </a>
-        </div>
-      <% } %>
-    <% }) %>
+    <% users.forEach(function(elem){ %> <% if(elem.selectedOption === 'vendor'){
+    %>
+    <!-- Add a class based on profession for filtering -->
+    <div class="kaarigar <%= elem.profession.toLowerCase() %>">
+      <div class="image-container">
+        <img class="imageKar" src="/images/Customer2.jpg" alt="" />
+      </div>
+      <div class="details-container">
+        <h3><%=elem.name%>(<%=elem.username%>)</h3>
+        <p>Experience: <%=elem.experience%> years</p>
+        <h5>
+          <strong>Profession :- </strong><span><%=elem.profession%></span>
+        </h5>
+        <p><%=elem.locationName%></p>
+        <a href="tel:<%=elem.mobile%>">Call Now</a>
+        <a href="/chat/<%=elem._id%>">Message now</a>
+      </div>
+      <a
+        href="https://www.google.com/maps/search/?api=1&query=<%=elem.locationName%>"
+      >
+        <img class="mapIm" src="/images/googlemap.png" alt="" />
+      </a>
+    </div>
+    <% } %> <% }) %>
 
     <script>
-      document.getElementById('searchInput').addEventListener('input', function() {
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function () {
           var searchValue = this.value.toLowerCase();
-          var kaarigars = document.querySelectorAll('.kaarigar');
-  
-          kaarigars.forEach(function(kaarigar) {
-              var professionElement = kaarigar.querySelector('.details-container h5 span');
-              
-              // Check if the profession element exists before trying to access its text content
-              if (professionElement) {
-                  var profession = professionElement.innerText.toLowerCase();
-                  if (profession.includes(searchValue)) {
-                      kaarigar.style.display = 'block';
-                  } else {
-                      kaarigar.style.display = 'none';
-                  }
+          var kaarigars = document.querySelectorAll(".kaarigar");
+
+          kaarigars.forEach(function (kaarigar) {
+            var professionElement = kaarigar.querySelector(
+              ".details-container h5 span"
+            );
+
+            // Check if the profession element exists before trying to access its text content
+            if (professionElement) {
+              var profession = professionElement.innerText.toLowerCase();
+              if (profession.includes(searchValue)) {
+                kaarigar.style.display = "block";
+              } else {
+                kaarigar.style.display = "none";
               }
+            }
           });
-      });
-  </script>
-</body>
+        });
+    </script>
+  </body>
 </html>

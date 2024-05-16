@@ -16,6 +16,8 @@ body {
     rgba(148, 187, 233, 1) 100%
   );
   max-width: 500px;
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 50px;
   height: auto;
   margin: auto;
   justify-content: center;
