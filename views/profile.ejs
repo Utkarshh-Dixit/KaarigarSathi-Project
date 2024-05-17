@@ -25,7 +25,10 @@
           <!-- <li class="logoutBut">Logout</li> -->
         </a>
       </div>
-      <form action="/accessChat" method="post">
+      <div class="welcome">
+        <h1>Welcome <%=user.name%></h1>
+      </div>
+      <!-- <form action="/accessChat" method="post">
         <input
           type="text"
           name="userId"
@@ -34,7 +37,7 @@
           required
         />
         <button>Let's go</button>
-      </form>
+      </form> -->
       <div class="top">
         <div class="heading">
           <h1>
@@ -46,19 +49,22 @@
         </div>
 
         <div id="imageContainer" class="image-containerone">
-          <img src="/images/newiconforhome.png" alt="" />
+          <img src="/images/home_topicon.png" alt="" class="zoom-image" />
         </div>
       </div>
       <div class="bottom">
+        <% if(user.selectedOption === "Customer") { %>
         <a href="/customer" class="image-container">
           <span>Customer</span>
           <img src="/images/customer_icon.png" alt="" />
         </a>
+        <% } else { %>
 
         <a href="/kaarigar" class="image-container">
           <span class="KaarigarBut">Kaarigar</span>
           <img src="/images/Kaarigaricon.png" alt="" />
         </a>
+        <% } %>
       </div>
     </div>
     <!-- <button id="getLocationButton">Get My Location</button> -->
