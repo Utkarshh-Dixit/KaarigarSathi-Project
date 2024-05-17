@@ -78,6 +78,13 @@ router.get("/chat/:id", async (req, res) => {
     let chat = await chatModel.findOne({
       users: { $all: [userId, useridd._id] },
     });
+    if (!chat) {
+      chat = await chatModel.create({
+        chatName: "Chat between users",
+        users: [userId, useridd._id],
+      });
+    }
+    await chat.save();
     const messages = await Message.find({ chat: chat._id }).populate(
       "sender",
       "username"
