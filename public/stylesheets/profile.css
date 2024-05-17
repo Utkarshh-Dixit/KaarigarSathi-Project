@@ -78,7 +78,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Allow the navbar to wrap on smaller screens */
+  flex-wrap: wrap;
 }
 
 .nav-logo img {
@@ -124,14 +124,6 @@ body {
   text-decoration: none;
   border: none;
 }
-
-/* .KaarigarBut{
-  margin-top: 70px;
-} */
-/* 
-.logoutBut:hover{
-  margin: 100px;
-} */
 
 /* Adjustments for smaller screens */
 @media screen and (max-width: 768px) {
