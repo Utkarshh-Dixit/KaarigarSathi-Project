@@ -48,8 +48,8 @@
           <strong>Profession :- </strong><span><%=elem.profession%></span>
         </h5>
         <p><%=elem.locationName%></p>
-        <a href="tel:<%=elem.mobile%>">Call Now</a>
-        <a href="/chat/<%=elem._id%>">Message now</a>
+        <a href="tel:<%=elem.mobile%>" class="callButton">Call Now</a>
+        <a href="/chat/<%=elem._id%>" class="msgButton">Message now</a>
       </div>
       <a
         href="https://www.google.com/maps/search/?api=1&query=<%=elem.locationName%>"

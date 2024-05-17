@@ -1,11 +1,21 @@
 body {
   /* background-color: aqua; */
-  background: linear-gradient(to right, aqua, #f7f7f7);
+  background: rgb(63, 94, 251);
+  background: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 1) 100%
+  );
 }
 
 /* Add a class for the search bar background */
 .search-bar {
-  background-color: rgba(255, 255, 255, 0.8); /* Set the background color with alpha for blending */
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.8
+  ); /* Set the background color with alpha for blending */
   padding: 10px;
 }
 
@@ -19,14 +29,23 @@ body {
   margin-bottom: 10px;
 }
 
-.rqrmnt{
+.rqrmnt {
   font-size: larger;
   display: flex;
   justify-content: center;
+  color: white;
+}
+.rqrmnt:hover {
+  color: rgb(202, 202, 202);
 }
 
 .kaarigar {
-  background: linear-gradient(to right, wheat, #eef779);
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
   display: flex;
   align-items: center;
   border: 2px solid black;
@@ -34,12 +53,20 @@ body {
   justify-content: center;
 }
 
-.kaarigar:hover{
-  background: rgb(224, 159, 37);
+.kaarigar:hover {
+  /* background: rgb(224, 159, 37); */
+  background: rgb(245, 82, 153);
+  background: radial-gradient(
+    circle,
+    rgb(255, 0, 0) 0%,
+    rgba(238, 174, 202, 1) 100%
+  );
+  color: white;
 }
 
 .mapIm {
   height: 120px;
+  border-radius: 20px;
   margin-left: 20px;
 }
 
@@ -59,10 +86,40 @@ body {
 }
 
 /* Optional: Add some styles to improve the overall layout */
-h3, p, h5 {
+h3,
+p,
+h5 {
   margin: 0;
 }
 
 p {
   margin-bottom: 10px;
+}
+
+.callButton {
+  background-color: #4caf50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.msgButton {
+  background-color: #f44336; /* Red */
+  border: none;
+  color: white;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 20px;
 }

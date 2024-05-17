@@ -24,8 +24,8 @@
         <h5><%=elem.description%></h5>
         <p></p>
         <p><%=elem.User.locationName%></p>
-        <a href="tel:<%=elem.User.mobile%>">Call Now</a>
-        <a href="/chat/<%=elem.User._id%>">Message now</a>
+        <a href="tel:<%=elem.User.mobile%>" class="callButton">Call Now</a>
+        <a href="/chat/<%=elem.User._id%>" class="msgButton">Message now</a>
       </div>
       <a
         href="https://www.google.com/maps/search/?api=1&query=<%=elem.User.lat%>,<%=elem.User.long%>"
