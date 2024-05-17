@@ -22,6 +22,21 @@ body {
   animation: zoom-in-out 6s infinite;
 }
 
+@keyframes zoom-in-out {
+  0% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.1); /* Zoom in */
+  }
+  66% {
+    transform: scale(1); /* Zoom out */
+  }
+  100% {
+    transform: scale(1.1); /* Zoom in again */
+  }
+}
+
 .logo {
   font: 25px "Courier New", Courier, monospace;
   color: black;
@@ -86,7 +101,7 @@ body {
 
 .nav-login-cart a,
 .nav-menu li a {
-  color: black;
+  color: lightgoldenrodyellow;
   text-decoration: none;
   margin-right: 20px;
 }
@@ -125,6 +140,10 @@ body {
     align-items: center;
   }
 
+  .welcome {
+    font-size: 10px;
+  }
+
   .nav-menu,
   .nav-login-cart {
     margin-top: 5px;
@@ -138,14 +157,6 @@ body {
   .logoutBut {
     margin-top: 5px;
   }
-}
-
-.bottom {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap; /* Added to allow wrapping on smaller screens */
-  padding: 10px 0; /* Added padding for spacing */
 }
 
 .top {
@@ -196,29 +207,22 @@ body {
   animation: slide-in-out 5s linear infinite;
 }
 
-@keyframes zoom-in-out {
-  0% {
-    transform: scale(1);
-  }
-  33% {
-    transform: scale(1.2); /* Zoom in */
-  }
-  66% {
-    transform: scale(1); /* Zoom out */
-  }
-  100% {
-    transform: scale(1.2); /* Zoom in again */
-  }
-}
-
 .image-containerone img {
   max-width: 100%;
   height: auto;
 }
 
+.bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .top {
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
   }
 
@@ -228,12 +232,15 @@ body {
   }
 
   .bottom {
-    flex-direction: column;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
   }
-
-  .image-container {
-    width: 80%; /* Adjusted for mobile layout */
-    margin: 10px 0; /* Adjusted margin for vertical layout */
+  .KaarigarBut {
+    display: flex;
+    font-size: 20px;
+    margin: auto;
+    width: 60%;
   }
 }
 
@@ -245,9 +252,8 @@ body {
     rgba(148, 187, 233, 1) 100%
   );
   color: rgb(30, 46, 39);
+  padding: 10px 20px;
   font-size: 20px;
-  font-weight: 600;
-  padding: 10px;
   border-radius: 20px;
 }
 .KaarigarBut:hover {
