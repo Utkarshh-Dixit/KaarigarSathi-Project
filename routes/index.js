@@ -10,104 +10,146 @@ const Requirement = require("./requirements");
 var router = express.Router();
 var flash = require("connect-flash");
 const chatModel = require("./chatModel");
+const Message = require("./messageModel");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { error: "" });
 });
 
-router.get("/chat/:id", async function (req, res) {
-  const useridd = await userModel.findOne({
-    _id: req.params.id,
-  });
-  res.render("chatPage", { useridd });
-});
+router.post("/messages", async (req, res) => {
+  const { senderId, receiverId, content } = req.body;
 
-// Add a new route for sending messages
-router.post("/send-message", async (req, res) => {
-  const { chatId, sender, content } = req.body;
+  if (!senderId || !receiverId || !content) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
 
   try {
-    // Create a new message document
-    const newMessage = new Message({
-      sender,
-      content,
-      chat: chatId,
+    // Check if a chat already exists between the users
+    let chat = await chatModel.findOne({
+      users: { $all: [senderId, receiverId] },
     });
 
-    // Save the message to the database
-    await newMessage.save();
+    // If no chat exists, create a new one
+    if (!chat) {
+      chat = await chatModel.create({
+        chatName: "Chat between users",
+        users: [senderId, receiverId],
+      });
+    }
 
-    // Update the latest message in the chat
-    await Chat.findByIdAndUpdate(chatId, { latestMessage: newMessage._id });
+    // Create a new message
+    const newMessage = await Message.create({
+      sender: senderId,
+      content: content,
+      chat: chat._id,
+    });
 
-    res.status(200).json({ success: true, message: newMessage });
+    // Update the latestMessage field in the corresponding chat
+    chat.latestMessage = newMessage._id;
+    await chat.save();
+
+    res.status(201).json(newMessage);
   } catch (error) {
-    console.error("Error sending message:", error);
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
-router.post("/accessChat", async function (req, res) {
+// GET endpoint to fetch chat messages
+router.get("/chats/:chatId/messages", async (req, res) => {
+  const { chatId } = req.params;
+
+  try {
+    const messages = await Message.find({ chat: chatId })
+      .populate("sender", "username") // Assuming 'username' is a field in your User model
+      .populate("chat");
+
+    res.status(200).json(messages);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// GET endpoint to fetch chat page
+router.get("/chat/:id", async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const useridd = await userModel.findById(req.params.id);
+    let chat = await chatModel.findOne({
+      users: { $all: [userId, useridd._id] },
+    });
+    const messages = await Message.find({ chat: chat._id }).populate(
+      "sender",
+      "username"
+    );
+    console.log(messages);
+    res.render("chatPage", { userId, useridd, messages });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// POST endpoint to access or create a chat
+router.post("/accessChat", async (req, res) => {
   const { userId } = req.body;
 
   if (!userId) {
     return res.status(400).json({ error: "User ID is required." });
   }
 
-  var isChat = await chatModel
-    .find({
-      $and: [
-        { users: { $elemMatch: { $eq: req.user._id } } },
-        { users: { $elemMatch: { $eq: userId } } },
-      ],
-    })
-    .populate("users", "-password")
-    .populate("latestMessage");
+  try {
+    let isChat = await chatModel
+      .find({
+        $and: [
+          { users: { $elemMatch: { $eq: req.user._id } } },
+          { users: { $elemMatch: { $eq: userId } } },
+        ],
+      })
+      .populate("users", "-password")
+      .populate("latestMessage");
 
-  isChat = await userModel.populate(isChat, {
-    path: "latestMessage.sender",
-    select: "name mobile",
-  });
+    isChat = await userModel.populate(isChat, {
+      path: "latestMessage.sender",
+      select: "name mobile",
+    });
 
-  if (isChat.length > 0) {
-    res.send(isChat[0]);
-  } else {
-    var chatData = {
-      chatName: "sender",
-      users: [req.user._id, userId],
-    };
+    if (isChat.length > 0) {
+      res.send(isChat[0]);
+    } else {
+      const chatData = {
+        chatName: "sender",
+        users: [req.user._id, userId],
+      };
 
-    try {
       const newChat = await chatModel.create(chatData);
       const fullChat = await chatModel
         .findOne({ _id: newChat._id })
         .populate("users", "-password");
       res.status(200).send(fullChat);
-    } catch (err) {
-      res.status(400);
-      throw new Error(err.message);
     }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 });
 
-router.get("/fetchChat", function (req, res) {
+// GET endpoint to fetch user's chats
+router.get("/fetchChat", async (req, res) => {
   try {
-    chatModel
-      .find({ users: { $elemMatch: { $eq: req.user._id } } })
+    const chats = await chatModel
+      .find({
+        users: { $elemMatch: { $eq: req.user._id } },
+      })
       .populate("users", "-password")
       .populate("latestMessage")
-      .sort({ updatedAt: -1 })
-      .then(async (result) => {
-        result = await userModel.populate(result, {
-          path: "latestMessage.sender",
-          select: "name mobile",
-        });
-        res.status(200).send(result);
-      });
+      .sort({ updatedAt: -1 });
+
+    const result = await userModel.populate(chats, {
+      path: "latestMessage.sender",
+      select: "name mobile",
+    });
+    res.status(200).send(result);
   } catch (err) {
-    res.status(400);
-    throw new Error(err.message);
+    res.status(400).json({ message: err.message });
   }
 });
 
