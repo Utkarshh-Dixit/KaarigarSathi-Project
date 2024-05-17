@@ -17,9 +17,23 @@ body {
   align-items: center;
   justify-content: center;
   font: 15px "Courier New", Courier, monospace;
-  color: white;
+  color: whitesmoke;
   transition: transform 2s ease-in-out;
   animation: zoom-in-out 6s infinite;
+}
+
+.logo {
+  font: 25px "Courier New", Courier, monospace;
+  color: black;
+  font-weight: 800;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  padding: 2px 8px;
+  cursor: pointer;
 }
 
 .pro {
@@ -29,22 +43,21 @@ body {
 }
 
 .home:hover {
-  background-color: aqua;
   padding: 3px 10px;
   font-weight: bolder;
   font-size: large;
 }
 
 .about:hover {
-  background-color: aqua;
   font-size: large;
   font-weight: bolder;
   padding: 3px 10px;
 }
 
 .navbar {
-  background: linear-gradient(to right, wheat, #3ee282);
-  color: black;
+  background: rgb(0, 37, 224);
+  background: radial-gradient(circle, rgb(0, 42, 255) 0%, rgb(253, 0, 51) 100%);
+  color: white;
   padding: 2px;
   border: 2px solid brown;
   display: flex;
@@ -66,6 +79,7 @@ body {
 
 .nav-menu li {
   margin-right: 20px;
+  color: rgb(216, 216, 216);
   padding: 3px 10px;
   cursor: pointer;
 }
@@ -134,43 +148,6 @@ body {
   padding: 10px 0; /* Added padding for spacing */
 }
 
-.bottom a:hover {
-  border-top: 3px solid black;
-  border-bottom: 3px solid black;
-}
-
-.bottom span {
-  border: 2px solid black;
-  padding: 0 20px;
-  border-radius: 15px;
-  font-size: 35px;
-  background-color: rgb(48, 223, 223);
-  color: black;
-}
-
-span:hover {
-  background-color: rgb(194, 184, 43);
-  font-weight: 700;
-}
-.image-container:hover {
-  background-color: rgb(194, 184, 43);
-  font-weight: 700;
-}
-
-.image-container {
-  width: 30%;
-  margin: 0 10%; /* Adjusted for centering */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.image-container img {
-  width: 100%; /* Changed to width: 100% for consistency */
-  height: auto;
-}
-
 .top {
   display: flex;
   justify-content: space-between;
@@ -181,13 +158,12 @@ span:hover {
 .heading {
   max-width: 50%;
   font-size: 18px;
-  color: white;
+  color: rgb(202, 201, 201);
   padding: 0 10%;
 }
 
 .image-containerone {
   width: 50%;
-  padding: 20px;
   overflow: hidden; /* Ensure the container hides overflow content */
   display: inline-block;
   position: relative;
@@ -212,9 +188,8 @@ span:hover {
 .image-containerone::before {
   content: "";
   background-image: url("/images/home_topicon.png");
-  background-size: 100% 100%; /* Cover the entire background */
+  background-size: 100% 100%;
   position: absolute;
-  top: 0;
   left: 100%;
   width: 100%;
   height: 100%;
@@ -260,4 +235,54 @@ span:hover {
     width: 80%; /* Adjusted for mobile layout */
     margin: 10px 0; /* Adjusted margin for vertical layout */
   }
+}
+
+.KaarigarBut {
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
+  color: rgb(30, 46, 39);
+  font-size: 20px;
+  font-weight: 600;
+  padding: 10px;
+  border-radius: 20px;
+}
+.KaarigarBut:hover {
+  color: rgb(0, 0, 0);
+  animation: zoom-in-out 6s infinite;
+}
+
+.animated-text {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 5s steps(14, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 14ch; /* Adjust the number of characters to match your text */
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: black;
+  }
+}
+
+.animated-text::after {
+  content: "";
+  border-right: 2px solid black;
+  animation: blink-caret 0.75s step-end infinite;
 }

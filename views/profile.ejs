@@ -10,7 +10,8 @@
     <div class="pro">
       <div class="navbar">
         <div class="nav-logo">
-          <img src="/images/logo.png" alt="" />
+          <!-- <img src="/images/logo.png" alt="" /> -->
+          <span class="logo">KaarigarSathi</span>
         </div>
         <ul class="nav-menu">
           <a href="/profile"><li class="home">Home</li></a>
@@ -40,7 +41,7 @@
       </form> -->
       <div class="top">
         <div class="heading">
-          <h1>
+          <h1 class="animated-text">
             A Smart way to <br />
             find and provide <br />
             work to Kaarigar<br />
@@ -55,14 +56,18 @@
       <div class="bottom">
         <% if(user.selectedOption === "Customer") { %>
         <a href="/customer" class="image-container">
-          <span>Customer</span>
-          <img src="/images/customer_icon.png" alt="" />
+          <span class="KaarigarBut"
+            >Lets go and find the workers you need today</span
+          >
+          <!-- <img src="/images/customer_icon.png" alt="" /> -->
         </a>
         <% } else { %>
 
         <a href="/kaarigar" class="image-container">
-          <span class="KaarigarBut">Kaarigar</span>
-          <img src="/images/Kaarigaricon.png" alt="" />
+          <span class="KaarigarBut"
+            >Let's Go and checkout the latest works available today.</span
+          >
+          <!-- <img src="/images/Kaarigaricon.png" alt="" /> -->
         </a>
         <% } %>
       </div>
