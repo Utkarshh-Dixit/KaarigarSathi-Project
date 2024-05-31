@@ -3,12 +3,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(252, 70, 107, 1) 100%
-  );
+  background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
   /* background: linear-gradient(to right, rgb(164, 248, 248), aqua); */
 }
 
@@ -70,11 +65,13 @@ body {
 }
 
 .navbar {
-  background: rgb(0, 37, 224);
-  background: radial-gradient(circle, rgb(0, 42, 255) 0%, rgb(253, 0, 51) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(31, 38, 135, 0.37)
+  );
   color: white;
   padding: 2px;
-  border: 2px solid brown;
   display: flex;
   justify-content: space-between;
   align-items: center;

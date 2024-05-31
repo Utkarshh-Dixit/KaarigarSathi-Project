@@ -2,19 +2,19 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
 }
 
 form {
   max-width: 400px;
   margin: 50px auto;
   padding: 20px;
-  background: rgb(238, 174, 202);
-  background: radial-gradient(
-    circle,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(31, 38, 135, 0.37)
   );
+  color: white;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 1);
 }

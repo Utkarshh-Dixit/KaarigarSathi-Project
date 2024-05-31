@@ -1,94 +1,150 @@
+/* General Styles */
+html,
 body {
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(252, 70, 107, 1) 100%
-  );
-  min-width: 100px;
-}
-
-.form {
-  background: rgb(238, 174, 202);
-  background: radial-gradient(
-    circle,
-    rgba(238, 174, 202, 1) 0%,
-    rgba(148, 187, 233, 1) 100%
-  );
-  max-width: 500px;
-  border-top-left-radius: 50px;
-  border-bottom-right-radius: 50px;
-  height: auto;
-  margin: auto;
-  justify-content: center;
-  font-size: large;
-}
-
-.LoginPa {
-  text-align: center;
-}
-
-.profileSelection {
-  margin: 0px;
-  font-size: 20px;
-  font-weight: 600;
-  font-family: "Courier New", Courier, monospace;
-}
-
-.profileSelect {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  color: #fff;
 }
 
-.form:hover {
-  background-color: rgb(0, 240, 240);
-}
-
-.Head {
-  font-size: 50px;
-  font-weight: 600;
-  font-family: "Courier New", Courier, monospace;
-  text-shadow: 2px 2px;
-}
-/* 
-option{
-    color: black;
-} */
-
-.user {
-  margin: 30px;
-  font-weight: 800;
-  padding-left: 20px;
-  padding-right: 20px;
-  /* padding-bottom: 10px; */
-  border-radius: 20px;
-  font-style: oblique;
-}
-
-.form > button {
-  font-size: large;
-  width: auto;
-  border-radius: 20px;
-  padding: 0 20px;
-  font-weight: 500;
-  color: black;
-  background: rgb(131, 58, 180);
+/* Form Container */
+.LoginPa {
   background: linear-gradient(
-    90deg,
-    rgba(131, 58, 180, 1) 0%,
-    rgba(253, 29, 29, 1) 50%,
-    rgba(252, 176, 69, 1) 100%
+    135deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(31, 38, 135, 0.37)
   );
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: 100%;
+  max-width: 450px;
+  margin: auto;
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
 }
 
-.form > button:hover {
-  background: rgb(131, 58, 180);
-  cursor: pointer;
+.LoginPa .Head {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 20px;
+  animation: slideIn 0.5s ease-in-out;
+}
+
+.profileSelect,
+.form span {
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .inputForLogin {
-  background: none;
-  border-radius: 20px;
-  font-size: 15px;
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2)
+  );
+  color: #fff;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.inputForLogin:focus {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.3)
+  );
+  outline: none;
+  transform: scale(1.02);
+}
+
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #3a6073, #2a4858);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #2a4858, #1f3641);
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(42, 72, 88, 0.5);
+}
+
+a {
+  color: #3a6073;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #2a4858;
+}
+
+/* Keyframes for Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Adjustments */
+@media screen and (max-width: 768px) {
+  .LoginPa {
+    padding: 30px;
+  }
+
+  .Head {
+    font-size: 22px;
+  }
+
+  .inputForLogin,
+  button {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .Head {
+    font-size: 20px;
+  }
+
+  .inputForLogin,
+  button {
+    font-size: 12px;
+  }
 }

@@ -1,13 +1,16 @@
 body {
   /* background-color: aqua; */
-  background: rgb(63, 94, 251);
-  background: radial-gradient(
-    circle,
-    rgba(63, 94, 251, 1) 0%,
-    rgba(252, 70, 107, 1) 100%
-  );
+  background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
+}
+
+h1 {
+  color: white;
+  text-align: center;
 }
 
 /* Add a class for the search bar background */
@@ -57,11 +60,10 @@ body {
 
 .kaarigar:hover {
   /* background: rgb(224, 159, 37); */
-  background: rgb(245, 82, 153);
   background: radial-gradient(
     circle,
-    rgb(255, 0, 0) 0%,
-    rgba(238, 174, 202, 1) 100%
+    rgba(0, 0, 0, 0.6) 0%,
+    rgba(31, 38, 135, 0.37) 100%
   );
   color: white;
 }
@@ -124,4 +126,22 @@ p {
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 20px;
+}
+
+.goHome {
+  background-color: #4caf50;
+  color: black;
+  padding: 5px;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  max-width: 150px;
+}
+
+.goHome:hover {
+  background-color: #2e8a33;
+  color: whitesmoke;
+  text-shadow: #0f2027 1px 1px 1px;
 }

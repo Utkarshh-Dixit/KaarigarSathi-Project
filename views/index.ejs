@@ -5,65 +5,87 @@
     <link rel="stylesheet" href="/stylesheets/login.css" />
   </head>
   <body>
-    <div>
-      <div class="LoginPa">
-        <form class="form" action="/register" method="post">
-          <span class="Head">Kaarigar-Sathi</span><br /><br /><br />
-          <div class="profileSelect">
-            <h4 class="profileSelection">Select your profile</h4>
-            <select
-              name="selectedOption"
-              id="selectedOption"
-              class="inputForLogin"
-              onchange="toggleProfessionInput()"
-            >
-              <option disabled selected>Select</option>
-              <option value="vendor">Vendor</option>
-              <option value="Customer">Customer</option></select
-            ><br /><br />
-          </div>
-          <div id="professionInput" style="display: none">
-            <label for="profession">Profession:</label>
-            <input
-              type="text"
-              id="profession"
-              name="profession"
-              class="inputForLogin"
-            />
-          </div>
-          <br />
-          <span class="user">Enter your mobile no.</span><br />
-          <input name="mobile" type="number" class="inputForLogin" />
-          <br /><br />
-          <span class="user">Enter your name</span><br />
-          <input name="name" type="text" class="inputForLogin" /> <br /><br />
-          <span class="user">Enter your email</span><br />
-          <input name="email" type="email" class="inputForLogin" /> <br /><br />
-          <span class="user">Enter your location</span><br />
+    <div class="LoginPa">
+      <form class="form" action="/register" method="post">
+        <span class="Head">Kaarigar-Sathi</span><br /><br /><br />
+        <div class="profileSelect">
+          <!-- <h4 class="profileSelection">Select your profile</h4> -->
+          <select
+            name="selectedOption"
+            id="selectedOption"
+            class="inputForLogin"
+            onchange="toggleProfessionInput()"
+          >
+            <option disabled selected>Select your profile</option>
+            <option value="vendor">Vendor</option>
+            <option value="Customer">Customer</option></select
+          ><br /><br />
+        </div>
+        <div id="professionInput" style="display: none">
+          <label for="profession">Profession:</label>
           <input
-            id="locationName"
-            name="locationName"
             type="text"
+            id="profession"
+            name="profession"
             class="inputForLogin"
           />
-          <br /><br />
-          <span class="user">Enter your username</span><br />
-          <input name="username" type="text" class="inputForLogin" />
-          <br /><br />
-          <span class="user">Enter your password</span><br />
-          <input
-            name="password"
-            type="password"
-            class="inputForLogin"
-          /><br /><br />
-          <!-- <span class='user'>Confirm your password</span><br/>
+        </div>
+        <br />
+        <!-- <span class="user">Enter your mobile no.</span><br /> -->
+        <input
+          name="mobile"
+          type="number"
+          class="inputForLogin"
+          placeholder="Enter your mobile number"
+        />
+        <br /><br />
+        <!-- <span class="user">Enter your name</span><br /> -->
+        <input
+          name="name"
+          type="text"
+          class="inputForLogin"
+          placeholder="Enter your name"
+        />
+        <br /><br />
+        <!-- <span class="user">Enter your email</span><br /> -->
+        <input
+          name="email"
+          type="email"
+          class="inputForLogin"
+          placeholder="Enter your email"
+        />
+        <br /><br />
+        <!-- <span class="user">Enter your location</span><br /> -->
+        <input
+          id="locationName"
+          name="locationName"
+          type="text"
+          class="inputForLogin"
+          placeholder="Enter your location"
+        />
+        <br /><br />
+        <!-- <span class="user">Enter your username</span><br /> -->
+        <input
+          name="username"
+          type="text"
+          class="inputForLogin"
+          placeholder="Enter your username"
+        />
+        <br /><br />
+        <!-- <span class="user">Enter your password</span><br /> -->
+        <input
+          name="password"
+          type="password"
+          class="inputForLogin"
+          placeholder="Enter your password"
+        /><br /><br />
+        <!-- <span class='user'>Confirm your password</span><br/>
           <input name='password' type='password' /><br/><br/> -->
-          <span><%=error%></span>
-          <button>Let's go</button><br /><br />
-          Already have an account ? <a href="/login">Login now</a>
-          <!-- <Link to='/loginpage' style={{backgroundColor:'darkblue', color:'white', borderRadius:'30px', paddingLeft:'5px', paddingRight:'5px'}}>Login now</Link> -->
-        </form>
-      </div>
+        <span><%=error%></span>
+        <button>Let's go</button><br /><br />
+        Already have an account ? <a href="/login">Login now</a>
+        <!-- <Link to='/loginpage' style={{backgroundColor:'darkblue', color:'white', borderRadius:'30px', paddingLeft:'5px', paddingRight:'5px'}}>Login now</Link> -->
+      </form>
     </div>
 
     <script>
