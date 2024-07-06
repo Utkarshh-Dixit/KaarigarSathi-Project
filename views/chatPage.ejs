@@ -21,6 +21,7 @@
         text-align: center;
         color: white;
         padding: 1rem;
+        padding-top: 0;
         background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
         margin: 0;
       }
@@ -69,9 +70,24 @@
         background: #efefef;
         border-radius: 20px;
       }
+      .goToHome {
+        background: #860000;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        padding: 0 10px;
+        margin: 0;
+        display: inline-block;
+      }
+      .gohomeContainer {
+        background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+      }
     </style>
   </head>
   <body>
+    <div class="gohomeContainer">
+      <a href="/profile" class="goToHome">Back</a>
+    </div>
     <% if (useridd) { %>
     <h1>Chat with <%= useridd.name %></h1>
     <% } %>

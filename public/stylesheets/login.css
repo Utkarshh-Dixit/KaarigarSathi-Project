@@ -45,6 +45,11 @@ body {
   font-weight: 500;
 }
 
+.profileOption {
+  color: black;
+  font: 600 14px/1.5 "Poppins", sans-serif;
+}
+
 .inputForLogin {
   width: 100%;
   padding: 12px;

@@ -375,65 +375,47 @@ router.post("/register", async function (req, res) {
   ) {
     return res.redirect("/");
   }
-  let newUser;
-  if (profession !== "") {
-    newUser = new userModel({
-      selectedOption: selectedOption,
-      profession: profession,
-      email: email,
-      mobile: mobile,
-      username: username,
-      name: name,
-      locationName: locationName,
-    });
-  } else {
-    newUser = new userModel({
-      selectedOption: selectedOption,
-      mobile: mobile,
-      email: email,
-      username: username,
-      name: name,
-      locationName: locationName,
-    });
-  }
 
-  userModel
-    .register(newUser, req.body.password)
-    .then(() => {
-      passport.authenticate("local")(req, res, function () {
-        res.redirect("/profile");
+  try {
+    // Check if a user with the same email, username, or mobile already exists
+    const existingUser = await userModel.findOne({
+      $or: [{ email }, { username }, { mobile }],
+    });
+
+    if (existingUser) {
+      return res.status(400).send("User with these details already exists.");
+    }
+
+    let newUser;
+    if (profession !== "") {
+      newUser = new userModel({
+        selectedOption: selectedOption,
+        profession: profession,
+        email: email,
+        mobile: mobile,
+        username: username,
+        name: name,
+        locationName: locationName,
       });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.redirect("/", { error: err });
+    } else {
+      newUser = new userModel({
+        selectedOption: selectedOption,
+        mobile: mobile,
+        email: email,
+        username: username,
+        name: name,
+        locationName: locationName,
+      });
+    }
+
+    await userModel.register(newUser, req.body.password);
+    passport.authenticate("local")(req, res, function () {
+      res.redirect("/profile");
     });
-  // Generate OTP
-  // const otp = crypto.randomInt(100000, 999999).toString();
-
-  // // Store user data and OTP in session
-  // req.session.userData = {
-  //   selectedOption,
-  //   mobile,
-  //   username,
-  //   name,
-  //   locationName,
-  //   otp
-  // };
-
-  // // Send OTP via Twilio
-  // try {
-  //   await twilioClient.messages.create({
-  //     body: `Your OTP is: ${otp}`,
-  //     from: '+916394924092',
-  //     to: `+${mobile}`
-  //   });
-
-  //   res.render('verifyOtp', { mobile });
-  // } catch (error) {
-  //   console.error('Error sending OTP via Twilio:', error.message);
-  //   res.status(500).send('Error sending OTP');
-  // }
+  } catch (err) {
+    console.error(err);
+    res.redirect("/", { error: err });
+  }
 });
 
 // router.post('/verify-otp', (req, res) => {
